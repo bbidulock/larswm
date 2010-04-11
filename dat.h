@@ -60,6 +60,9 @@
 #define ZOOM_NORMAL 1
 #define ZOOM_SELECT 2
 
+/* to prevent windows from being moved totally out */
+#define MIN_VISIBLE 20
+
 typedef struct Client Client;
 typedef struct ScreenInfo ScreenInfo;
 typedef struct Prefs Prefs;

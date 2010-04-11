@@ -1363,13 +1363,14 @@ move_up (Client * c)
 {
   if (c && c->isnotile)
     {
+      int min_y = prefs.panelsize + MIN_VISIBLE - c->dy;
       if (c->screen->bigmr[c->screen->desktop])
 	c->y -= (c->screen->tile_height / 20);
       else
 	c->y--;
 
-      if (c->y < prefs.panelsize)
-	c->y = prefs.panelsize;
+      if (c->y < min_y)
+	c->y = min_y;
 
       XMoveWindow (dpy, c->parent, c->x, c->y);
       sendconfig (c);
@@ -1381,7 +1382,7 @@ move_down (Client * c)
 {
   if (c && c->isnotile)
     {
-      int max_y = c->screen->tile_height - c->dy - (2 * BORDER);
+      int max_y = c->screen->tile_height - MIN_VISIBLE;
 
       if (c->screen->bigmr[c->screen->desktop])
 	c->y += (c->screen->tile_height / 20);
@@ -1401,13 +1402,14 @@ move_left (Client * c)
 {
   if (c && c->isnotile)
     {
+      int min_x = MIN_VISIBLE - c->dx;
       if (c->screen->bigmr[c->screen->desktop])
 	c->x -= (DisplayWidth (dpy, c->screen->num) / 20);
       else
 	c->x--;
 
-      if (c->x < 0)
-	c->x = 0;
+      if (c->x < min_x)
+	c->x = min_x;
 
       XMoveWindow (dpy, c->parent, c->x, c->y);
       sendconfig (c);
@@ -1419,7 +1421,7 @@ move_right (Client * c)
 {
   if (c && c->isnotile)
     {
-      int max_x = DisplayWidth (dpy, c->screen->num) - c->dx - (2 * BORDER);
+      int max_x = DisplayWidth (dpy, c->screen->num) - MIN_VISIBLE;
 
       if (c->screen->bigmr[c->screen->desktop])
 	c->x += (DisplayWidth (dpy, c->screen->num) / 20);
