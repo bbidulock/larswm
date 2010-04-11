@@ -2009,3 +2009,10 @@ REL_7_5_2	Jun 28, 2004.
 		   123. Tweaked how colors for 3D borders are calculated.
 		   124. Fixed menu inconsistency in sample.larswmrc.
 REL_7_5_3	Jul 15, 2004.
+
+		   125. Fixed the behavior for ChangeRequests, so that windows
+		        cannot move themselves off screen.
+		   126. Rewrite of `draw_tbar' to fix possible buffer-
+		        overflows.
+		   127. Fixed calls to `execl' in `buttons.c' to pass a valid
+		        sentinel. (Needed to compile with `-Wall -Werror')

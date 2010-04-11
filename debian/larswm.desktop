@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=larswm
+Comment=This logs you into a plain larswm session
+Exec=/usr/bin/larswm
+Terminal=False
+TryExec=/usr/bin/larswm
+Type=Application

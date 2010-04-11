@@ -26,6 +26,7 @@ int
 main (int argc, char **argv)
 {
   int i;
+  int update = 0;
   time_t t;
   char *slist;
   char *format = "%c";
@@ -48,9 +49,13 @@ main (int argc, char **argv)
 	{
 	  format = argv[++i];
 	}
+      else if (strcmp (argv[i], "-update") == 0 && i + 1 < argc)
+	{
+	  update = atoi(argv[++i]);
+	}
       else
 	{
-	  fprintf (stderr, "usage: %s [-display display] [-format format]\n",
+	  fprintf (stderr, "usage: %s [-display display] [-format format] [-update seconds]\n",
 		   argv[0]);
 	  exit (1);
 	}
@@ -64,6 +69,11 @@ main (int argc, char **argv)
       exit (1);
     }
 
+  if (update == 0)
+    {
+      update = 1;
+    }
+  
   bartext_larswm = XInternAtom (dpy, "LARSWM_BARTEXT", False);
   slist = malloc (CLOCK_LENGTH);
 
@@ -77,6 +87,6 @@ main (int argc, char **argv)
       XFree (pr.value);
       XSync (dpy, False);
 
-      sleep (1);
+      sleep (update);
     }
 }

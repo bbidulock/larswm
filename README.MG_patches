@@ -1,0 +1,216 @@
+**********************************************************************
+*			    Larswm patches                           *
+**********************************************************************
+
+Larswm is a small X window manager written by Lars Bernhardsson.  What
+makes it unique compared to most window managers is its automatic
+window tiling. Read more about it at homepage:
+http://home.earthlink.net/~lab1701/larswm/
+
+These are the patches to customize laswm for my use.
+
+Applying:
+=========
+
+The patches are again larswm-7.5.3 but you can try it with other
+version (if you are feeling lucky :-).
+
+Unpack larswm source and patches (if you hasn't do it yet):
+
+    tar -xzvf larswm-7.5.3.tar.gz
+    tar -xzvf larswm-patches_7.5.3-5.tar.gz
+
+Move patches in unpacked larswm tree:
+
+    mv larswm-patches_7.5.3-5 larswm-7.5.3
+
+cd in patches and run patch.sh script:
+
+    cd larswm-7.5.3/larswm-patches_7.5.3-5
+    ./patch.sh
+
+Now you can build larswm.
+
+You can try to apply only some of the patches: just remove undesired
+ones from patches directory before running patch.sh (in many cases it
+works, but I didn't check all combinations). Read description of the
+patches below to decide which you want.
+
+If you want to add your patch for this collection, move it in patches
+directory and name it something like: xy_some-description.patch (`xy'
+-- two letters that will control in what order the patches will be
+applied).
+
+Description:
+============
+
+0. Patch from Florian Forster (00_larswm-7.5.3+patches.patch).
+1. Larsclock `-update' option (aa_larsclock-update.patch).
+2. Switch to window with class/name (ca_larswm-switchclass.patch).
+3. Two windows on left track (da_larswm-two_on_left.patch).
+4. Move window to other desktop (ea_larswm-move_other_desktop.patch).
+5. Toggle skip fokus key binding (fa_larswm-toggle_skip_fokus.patch).
+
+
+0. Patch from Florian Forster (00_larswm-7.5.3+patches.patch).
+--------------------------------------------------------------
+
+This is Florian Forster's patch [*] -- an "unofficial" latest version of
+larswm. It contains mainly bug fixes. I strongly recommend to apply this
+patch.
+
+[*] http://article.gmane.org/gmane.comp.window-managers.larswm.devel/105
+
+
+1. Larsclock `-update' option (aa_larsclock-update.patch).
+----------------------------------------------------------
+
+This patch adds `-update' option to larsclock:
+
+  -update seconds    lets you specify the frequency in seconds at which
+                     larsclock should update status bar.
+
+
+2. Switch to window with class/name (ca_larswm-switchclass.patch).
+------------------------------------------------------------------
+
+The patch adds shortcuts to switch (focus) to window with defined name
+or class. If such window is not found, then corresponding program is
+run. For example, if you define in your .larswmrc:
+
+    larswm.switchclass.0: Emacs
+    larswm.switchclass_app.0: emacs
+    larswm.switchclass_key.0: e
+    larswm.switchclass_mod.0: Shift+Control
+
+then when you hit control+shift+e, larswm will switch to the first
+found Emacs window, switching workspaces if necessary, or run "emacs"
+in the background if not found. The next control+shift+e will switch
+to another Emacs window (if it exists).
+
+You can spesify class of a window (e.g Emacs, XTerm) or window name
+(e.g Emacs~gnus, XTerm~rxvt).
+
+The idea is stolen from sawfish's gimme.jl written by Stig S. Bakken
+<stig@php.net>.
+
+Source modifications.
+
+    In button.c:
+
+       is_switchclass() checks if windows match specified class.
+       window_of_class() finds the window that match specified class
+       using is_switchclass(). If does not find, spawn new process.
+
+    In dat.h struct Prefs modified adding new members:
+       char *switchclass[MAXSWITCHCLASSES];
+       char *switchclass_app[MAXSWITCHCLASSES];
+       KeySym switchclass_key[MAXSWITCHCLASSES];
+       unsigned long switchclass_mod[MAXSWITCHCLASSES];
+
+    keys.c changed to call window_of_class() on switchclass_key &&
+    switchclass_mod event.
+
+    prefs.c changed accordingly.
+
+
+3. Two windows on left track (da_larswm-two_on_left.patch).
+-----------------------------------------------------------
+
+From time to time it is useful to have two windows on left track. For
+example, if it is needed to compare something in two different
+windows. This patch gives you this functionality.
+
+Below is detailed description what you can do after applying this
+patch. You have three new key combinations. The default shortcuts are:
+
+    ! larswm.two_on_left_key: Left
+    ! larswm.two_on_left_mod: Shift+Control+Alt
+    ! larswm.two_on_left_shrink_key: Down
+    ! larswm.two_on_left_shrink_mod: Shift+Control+Alt
+    ! larswm.two_on_left_grow_key: Up
+    ! larswm.two_on_left_grow_mod: Shift+Control+Alt
+
+Pressing "two_on_left_mod+two_on_left_key" you obtain two windows on
+left track. Pressing "two_on_left_shrink_mod+two_on_left_shrink_key"
+or "two_on_left_grow_mod+two_on_left_grow_key" you resize vertically
+these windows. Pressing "two_on_left_mod+two_on_left_key" again you
+get one window on left track back.
+
+Source modifications:
+
+    In dat.h:
+
+    VERT_GROW=5 is defined (how much per cent grow/shrink windows
+    at. May be it should be in preffs?).
+
+    In struct ScreenInfo new item is added:
+
+       int two_on_left[MAXDESKTOPS]
+    
+    When it is 0, only one window at left track, otherwise it shows
+    the size in per sent of left bottom window.
+
+    In struct Prefs corresponding items were added for key binding.
+
+    In tiling.c two new functions are added:
+
+       two_on_left() -- toggle s->two_on_left (0 or 50);
+       two_on_left_grow() -- change s->two_on_left at dy.
+
+    and tile_all() is modified.
+
+    In keys.c and prefs.c: corresponding changes for key binding.
+
+
+4. Move window to other desktop (ea_larswm-move_other_desktop.patch).
+---------------------------------------------------------------------
+
+This adds the ability to move window to othe virtual desktops.
+The default shortcuts are:
+
+    ! larswm.move_next_desktop_key: Right
+    ! larswm.move_next_desktop_mod: Shift+Alt
+    !
+    ! larswm.move_prev_desktop_key: Left
+    ! larswm.move_prev_desktop_mod: Shift+Alt
+    
+      ....
+
+    ! Move window to desktop shortcuts: Defaults are for the first 12 desktops, F1-F12.
+    ! If you have more than 12 desktops, you will have to add key bindings for them
+    ! or just use move prev/next desktop to move window to where you want.
+    !
+    ! larswm.move_desktop_key.0: F1
+    ! larswm.move_desktop_mod.0: Shift+Alt
+
+Source modifications.
+    
+    buttons.c:move_other_desktop() added that makes trick.
+    In Prefs struct the following members added:
+
+    	KeySym		move_next_desktop_key;
+	unsigned long	move_next_desktop_mod;
+
+	KeySym		move_prev_desktop_key;
+	unsigned long	move_prev_desktop_mod;
+
+	KeySym		move_desktop_key[MAXDESKTOPS];
+	unsigned long	move_desktop_mod[MAXDESKTOPS];
+
+    for keyboard shortcuts.
+
+
+5. Toggle skip fokus key binding (fa_larswm-toggle_skip_focus.patch).
+---------------------------------------------------------------------
+
+In "official" larswm the skip_focus could be toggled using bar menu,
+but if you toggle very often it becomes rather boring. So key binding
+to toggle skip_focus is added.
+
+	larswm.toggle_skip_focus_key: f
+	larswm.toggle_skip_focus_mod: Control+Alt
+
+
+--
+Mikolaj Golub <golub@inec.com.ua>

@@ -245,6 +245,13 @@ initkeys (Client * c)
 	  XGrabKey (dpy, XKeysymToKeycode (dpy, prefs.application_key[y]),
 		    prefs.application_mod[y], c->parent, True, GrabModeAsync,
 		    GrabModeAsync);
+
+      for (y = 0; y < MAXSWITCHCLASSES; y++)
+	if (prefs.switchclass[y] && prefs.switchclass_key[y])
+	  XGrabKey (dpy, XKeysymToKeycode (dpy, prefs.switchclass_key[y]),
+		    prefs.switchclass_mod[y], c->parent, True, GrabModeAsync,
+		    GrabModeAsync);
+
     }
   else
     {
@@ -309,6 +316,13 @@ initkeys (Client * c)
 	      XGrabKey (dpy, XKeysymToKeycode (dpy, prefs.application_key[y]),
 			prefs.application_mod[y], screens[i].root, True,
 			GrabModeAsync, GrabModeAsync);
+
+	  for (y = 0; y < MAXSWITCHCLASSES; y++)
+	    if (prefs.switchclass[y] && prefs.switchclass_key[y])
+	      XGrabKey (dpy, XKeysymToKeycode (dpy, prefs.switchclass_key[y]),
+			prefs.switchclass_mod[y], screens[i].root, True,
+			GrabModeAsync, GrabModeAsync);
+
 	}
     }
 }
@@ -431,6 +445,16 @@ keyevent (XKeyEvent * e)
 	      && (m == prefs.application_mod[i]))
 	    {
 	      spawn (s, prefs.application[i]);
+	      return;
+	    }
+	}
+
+      for (i = 0; i < MAXSWITCHCLASSES; i++)
+        {
+	  if (prefs.switchclass[i] && (k == prefs.switchclass_key[i])
+	      && (m == prefs.switchclass_mod[i]))
+	    {
+	      window_of_class (s, prefs.switchclass[i], prefs.switchclass_app[i]);
 	      return;
 	    }
 	}

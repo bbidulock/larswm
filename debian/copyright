@@ -1,0 +1,43 @@
+This package was debianized by Tommi Virtanen tv@debian.org on
+Mon,  9 Oct 2000 09:02:29 +0300.
+
+It was downloaded from http://larswm.fnurt.net/
+
+Upstream authors: Lars Bernhardsson <lab@fnurt.net>
+		  David Hogan <dhog@cs.su.oz.au> (9wm)
+
+Copyright:
+
+--8<--
+Licensing:
+
+Please see the file README.9wm for David Hogan's original 9wm license.
+The same type of license applies to larswm.
+--8<--
+
+--8<--
+Licence
+=======
+
+  9wm is free software, and is Copyright (c) 1994-1996 by David Hogan.
+  Permission is granted to all sentient beings to use this software,
+  to make copies of it, and to distribute those copies, provided
+  that:
+
+      (1) the copyright and licence notices are left intact
+      (2) the recipients are aware that it is free software
+      (3) any unapproved changes in functionality are either
+            (i) only distributed as patches
+        or (ii) distributed as a new program which is not called 9wm
+                and whose documentation gives credit where it is due
+      (4) the author is not held responsible for any defects
+          or shortcomings in the software, or damages caused by it.
+
+  There is no warranty for this software.  Have a nice day.
+--8<--
+
+The m4 macros are copyright by Christopher Biggs <unixbigot@pobox.com> and were
+initially downloaded from  http://members.optushome.com.au/cjbiggs/code/larswm/
+and included with the explicit permission of the author.
+
+----------- Edelhard Becker <edelhard@debian.org>, Fri Jun 18 23:51:07 UTC 2004

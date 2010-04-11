@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = "remove" ]; then
+	update-alternatives --remove x-window-manager /usr/bin/larswm
+fi
+
+#DEBHELPER#

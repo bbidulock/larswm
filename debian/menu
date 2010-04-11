@@ -1,0 +1,6 @@
+?package(larswm):\
+ needs="wm"\
+ section="Window Managers"\
+ longtitle="Larswm: tiling window manager for X"\
+ title="Larswm"\
+ command="/usr/bin/larswm"

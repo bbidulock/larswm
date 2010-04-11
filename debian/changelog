@@ -1,0 +1,255 @@
+larswm (7.5.3-6) unstable; urgency=low
+
+  * Build-depend on xutils-dev rather than xutils (thanks, Daniel Schepler)
+    Closes: #485208
+  * moved homepage from description to control field
+  * bumped standards to 3.8.0 (moved menu entry)
+  * fixed manpages (Minus "-" and "." in first column)
+  * replaced x-dev by x11proto-core-dev on Build-Depends
+
+ -- Edelhard Becker <edelhard@debian.org>  Tue, 10 Jun 2008 23:09:42 +0200
+
+larswm (7.5.3-5) unstable; urgency=low
+
+  * updated Mikolajs README and patches to his release 7.5.3-5:
+     - aa_larsclock-update.patch
+     - ba_larswm-switchclass.patch
+  * also include now Florian Forsters bugfix patch
+
+ -- Edelhard Becker <edelhard@debian.org>  Sat,  4 Mar 2006 17:15:41 +0100
+
+larswm (7.5.3-4) unstable; urgency=low
+
+  * debian/control: adjust Build-Depends for removed xlibs-dev
+    (Closes: #346880)
+  * provide larswm.desktop session file (Closes: #330054)
+  * bumped standards to 3.6.2 (no changes)
+
+ -- Edelhard Becker <edelhard@debian.org>  Tue, 10 Jan 2006 15:25:07 +0100
+
+larswm (7.5.3-3) unstable; urgency=low
+
+  * applied Mikolaj Golubs 'larswm-switchclass' patch, thanks Mikolaj
+  * added Mikolajs README to the docs
+
+ -- Edelhard Becker <edelhard@debian.org>  Tue, 16 Aug 2005 16:22:30 +0200
+
+larswm (7.5.3-2) unstable; urgency=low
+
+  * applied Mikolaj Golubs 'larsclock -update' patch, thanks Mikolaj
+  * applied Tommy Petterssons 'skip-floating-tools' patch, mailed to
+    larswm-devel list on Tue, 09 Aug 2005
+
+ -- Edelhard Becker <edelhard@debian.org>  Tue,  9 Aug 2005 18:07:03 +0200
+
+larswm (7.5.3-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Edelhard Becker <edelhard@debian.org>  Tue, 20 Jul 2004 18:11:51 +0200
+
+larswm (7.5.2-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Edelhard Becker <edelhard@debian.org>  Thu,  8 Jul 2004 23:52:37 +0200
+
+larswm (7.5.1-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Edelhard Becker <edelhard@debian.org>  Tue, 22 Jun 2004 13:49:30 +0200
+
+larswm (7.5.0-1) unstable; urgency=low
+
+  * New upstream release
+  * added Christopher Biggs' m4 macros for generating a larswmrc file with the
+    necessary changes to debian/{rules,copyright}, thanks Christopher!
+
+ -- Edelhard Becker <edelhard@debian.org>  Sat, 19 Jun 2004 00:55:18 +0200
+
+larswm (7.4.8-1) unstable; urgency=low
+
+  * New upstream release
+  * removed references to Postscript refcards from debian/rules
+  * corrected larsmenu manpage section
+
+ -- Edelhard Becker <edelhard@debian.org>  Thu,  3 Jun 2004 23:25:59 +0200
+
+larswm (7.3.9-1) unstable; urgency=low
+
+  * New upstream release (7.3.7 and 8 were test releases)
+  * changed URL in debian/{control,copyright,watch} to new DynDNS name
+
+ -- Edelhard Becker <edelhard@debian.org>  Sun, 30 May 2004 12:15:45 +0200
+
+larswm (7.3.6-1) unstable; urgency=low
+
+  * New upstream release (Tommy Petterssons sticky-space-per-desktop patch
+    included)
+
+ -- Edelhard Becker <edelhard@debian.org>  Sun, 16 May 2004 11:45:40 +0200
+
+larswm (7.3.5-1) unstable; urgency=low
+
+  * New upstream release
+  * made package lintian-clean:
+    - updated manpages section
+    - cleaned up menu entry
+
+ -- Edelhard Becker <edelhard@debian.org>  Sat,  8 May 2004 15:36:19 +0200
+
+larswm (7.3.3-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Edelhard Becker <edelhard@debian.org>  Sat,  1 May 2004 14:55:36 +0200
+
+larswm (7.3.2-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Edelhard Becker <edelhard@debian.org>  Sat, 17 Apr 2004 19:28:59 +0200
+
+larswm (7.3.1-1) unstable; urgency=low
+
+  * New upstream release
+  * added Tommy Petterssons sticky-space-per-desktop patch (mailed to
+    larswm-devel list on Jan, 24th 2004
+  * bumped standards to 3.6.1 (no changes)
+  * added author and homepage to package description; updated links to
+    homepage in copyright and watch file
+
+ -- Edelhard Becker <edelhard@debian.org>  Wed,  7 Apr 2004 18:03:43 +0200
+
+larswm (7.2.10-2) unstable; urgency=low
+
+  * debian/control: changed maintainer to my debian account
+  * debian/control: two empty lines break backporting to woody
+  * bumped standards to 3.5.10
+
+ -- Edelhard Becker <edelhard@debian.org>  Wed,  9 Jul 2003 16:19:50 +0200
+
+larswm (7.2.10-1) unstable; urgency=low
+
+  * New upstream release
+  * larsclock format patch added (initial forward was never received by
+    upstream). Closes: #94016.
+  * focus flickering fix included in upstream
+
+ -- Edelhard Becker <becker@edelhard.de>  Tue, 29 Apr 2003 10:54:14 +0200
+
+larswm (7.2.9-1) unstable; urgency=low
+
+  * New upstream release
+  * bumped to standards 3.5.9.
+  * added watch file
+  * focus flickering fixed. Closes: #182546.
+
+ -- Edelhard Becker <becker@edelhard.de>  Thu, 24 Apr 2003 11:25:57 +0200
+
+larswm (7.2.8-3) unstable; urgency=low
+
+  * New maintainer. Closes: #163317.
+
+ -- Edelhard Becker <becker@edelhard.de>  Wed, 26 Feb 2003 16:08:51 +0100
+
+larswm (7.2.8-2) unstable; urgency=low
+
+  * QA upload.
+  * debian/menu: Use `needs=wm' rather than `needs=x11'.  Closes: #173196.
+
+ -- Matej Vela <vela@debian.org>  Sun, 15 Dec 2002 20:58:52 +0100
+
+larswm (7.2.8-1) unstable; urgency=low
+
+  * QA upload.
+  * New upstream release.
+  * debian/copyright: Update upstream URL.
+
+ -- Matej Vela <vela@debian.org>  Mon,  4 Nov 2002 00:09:43 +0100
+
+larswm (7.2.6-1) unstable; urgency=low
+
+  * QA upload.
+  * New upstream release.
+
+ -- Matej Vela <vela@debian.org>  Tue,  1 Oct 2002 21:24:51 +0200
+
+larswm (7.2.5-1) unstable; urgency=low
+
+  * QA upload.
+  * New upstream release.
+
+ -- Matej Vela <vela@debian.org>  Sun, 29 Sep 2002 22:52:56 +0200
+
+larswm (7.2.3-3) unstable; urgency=low
+
+  * QA upload.
+  * Added xutils to build dependencies.  Closes: #162233.
+
+ -- Matej Vela <vela@debian.org>  Wed, 25 Sep 2002 05:39:46 +0200
+
+larswm (7.2.3-2) unstable; urgency=low
+
+  * QA upload.
+  * Built as a non-native package.
+  * Converted to debhelper.
+  * Added menu support.  Closes: #94015.
+  * Updated build dependencies.
+
+ -- Matej Vela <vela@debian.org>  Mon, 23 Sep 2002 22:51:41 +0200
+
+larswm (7.2.3-1) unstable; urgency=low
+
+  * New upstream release (Closes: #153463).
+  * Bumped policy to 3.5.7
+  * Don't fiddle with /usr/doc anymore.
+  * Orhaned, I don't use larswm anymore.
+
+ -- Tommi Virtanen <tv@debian.org>  Sun, 22 Sep 2002 15:40:18 +0300
+
+larswm (7.0.13-2) unstable; urgency=low
+
+  * Move everything out of /usr/X11R6.
+  * prerm was missing alternatives removal; added unconditional
+    cleaning to postinst (upgrade isn't good enough, the package
+    could be uninstalled for a while).
+  * /usr/man -> /usr/share/man
+
+ -- Tommi Virtanen <tv@debian.org>  Wed, 21 Feb 2001 20:57:15 +0200
+
+larswm (7.0.13-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Tommi Virtanen <tv@debian.org>  Sat,  2 Dec 2000 18:31:55 +0200
+
+larswm (7.0.12-1) unstable; urgency=low
+
+  * New upstream version.
+  * Beware: the larswm executable has been split to larswm, 
+    larswm-message and larswm-clock.
+
+ -- Tommi Virtanen <tv@debian.org>  Sun, 29 Oct 2000 00:36:42 +0300
+
+larswm (7.0.10-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Tommi Virtanen <tv@debian.org>  Fri, 13 Oct 2000 15:27:24 +0300
+
+larswm (7.0.8-2) unstable; urgency=low
+
+  * Install the upstream changelog.
+  * Remove dummy debian/shlibs.local.
+
+ -- Tommi Virtanen <tv@debian.org>  Fri, 13 Oct 2000 15:19:43 +0300
+
+larswm (7.0.8-1) unstable; urgency=low
+
+  * Initial Release, closes: #74374.
+
+ -- Tommi Virtanen <tv@debian.org>  Mon,  9 Oct 2000 09:00:29 +0300
+
+

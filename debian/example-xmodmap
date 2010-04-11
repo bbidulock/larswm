@@ -1,0 +1,29 @@
+!
+! Keys for the Logitech iTouch wireless keyboid
+!
+! Use xev to find out what keycode your keys generate, then choose 
+! an appropriate keysym from /usr/X11R6/lib/X11/XKeysymDB.
+!
+keycode 233 = Return
+
+keycode 223 = XF86Standby
+keycode 147 = XF86Finance
+keycode 148 = XF86MySites
+keycode 149 = XF86Community
+keycode 230 = XF86Favorites
+
+keycode 144 = XF86AudioPrev
+keycode 153 = XF86AudioNext
+keycode 237 = XF86AudioMedia
+keycode 174 = XF86AudioLowerVolume
+keycode 176 = XF86AudioRaiseVolume
+keycode 160 = XF86AudioMute
+keycode 162 = XF86AudioPlay
+keycode 164 = XF86AudioStop
+
+keycode 146 = XF86iTouch
+keycode 236 = XF86Mail
+keycode 145 = XF86Shop
+keycode 229 = XF86Search
+keycode 178 = XF86HomePage
+

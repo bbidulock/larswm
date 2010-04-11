@@ -151,7 +151,7 @@ This option is particularly useful when combined with
 
 .ft B
 .nf
-larsmenu -popup "XTerm:xterm" "Calculator:xcalc"
+larsmenu \-popup "XTerm:xterm" "Calculator:xcalc"
 .ft
 .fi
 

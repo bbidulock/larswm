@@ -1,0 +1,19 @@
+Source: larswm
+Section: x11
+Priority: optional
+Maintainer: Edelhard Becker <edelhard@debian.org>
+Standards-Version: 3.8.0
+Build-Depends: debhelper (>= 4), groff, libx11-dev, libxext-dev, libxmu-dev, x11proto-core-dev, xutils-dev
+Homepage: http://larswm.fnurt.net/
+
+Package: larswm
+Architecture: any
+Depends: ${shlibs:Depends}
+Provides: x-window-manager
+Description: Lars Window Manager with tiled windows
+ larswm is a hack for 9wm, adding automatic window tiling, virtual
+ desktops and many other features designed to make it a very efficient
+ user environment. It uses very little CPU time and virtual memory. 
+ .
+  Author:   Lars Bernhardsson
+

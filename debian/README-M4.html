@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Hacks for the larswm window manager</title>
+    <style type="text/css">
+      <!-- 
+      body { background: white; }
+      dl dd { margin-bottom: 1em; }
+      dl dt.ul { text-decoration: underline; }
+      -->
+    </style>
+  </head>
+
+  <body>
+    <h1>Hacks for the larswm window manager</h1>
+
+    <p>The X11 window manager "<a
+    href="http://larswm.fnurt.net/">larswm</a>" is a minimalist window
+    manager descended from 9wm, which was itself inspired by Plan 9's
+    windowing system.  The core idea is that windows should arrange
+    themselves, allowing the user to concentrate on getting the job done,
+    instead of pixel-dinking.</p>
+
+    <p>I got tired of maintaining a large larswm configuration file
+    containing lots of custom key definitions for my Logitech iTouch
+    keyboard, so I wrote some M4 macros to simplify my configuration
+    file, and to automate the numbering of application key directives.
+    Those of you who administer <code>sendmail</code> will be familiar
+    with the process of using a short macro file to produce a long
+    (and essentially write-only) configuration file. 
+
+    <p>To use the configuration macros you will need:</p>
+    
+    <dl>
+      <dt><a href="larswm.m4">larswm.m4</a></dt>
+      <dd>This file defines macros that
+	expand to larswm configuration directives.   You should not need
+	to modify this file, just place it in your home dir, or wherever
+	you keep your "larswm.mc" source file.  Comments explain how
+	to use the macros.</dd>
+      <dt><a href="example-larswm.mc">larswm.mc</a></dt>
+      <dd>This file contains the macro invocations that expand to
+      larswm directives suitable for .larswmrc</dd>
+      <dt class="ul">A .larswmrc generated from larswm.mc</dt>
+      <dd>Whenever you modify larswm.mc, regenerate your .larswmrc by
+      running <blockquote><code>m4 larswm.mc >$HOME/.larswmrc</code></blockquote></dd>
+    </dl>
+
+    <h2>Bugs and gotchas</h2>
+    
+    <ul>
+
+      <li>Some of macros don't work in BSD m4.  I'll fix this someday.
+	Until then, install GNU m4, and run <code>gm4</code> instead
+	of <code>m4</code>.
+
+      <li>If you want larswm to utilise extended keys such as
+	<code>XF86Standby</code>, make sure they are defined in your X
+	keymap.  If you see "<code>Keysym 0x0, NoSymbol</code>" in the
+	output of <code>xev</code> when you press your extended keys,
+	you need to use <code>xmodmap</code> to set the
+	<em>keycode&nbsp;-&gt;&nbsp;keysym</em> mapping as in <a
+	href="example-xmodmap">this example</a>.  If you try to trap
+	an unknown keysym, larswm will break---clients such as xterm
+	will just beep plaintively at you when you press any key.
+
+    </ul>
+
+    <hr>
+    <address><a href="mailto:unixbigot@pobox.com">Christopher Biggs</a></address>
+<!-- Created: Fri Jun 18 12:00:59 EST 2004 -->
+<!-- hhmts start -->
+Last modified: Fri Jun 18 20:07:10 EST 2004
+<!-- hhmts end -->
+  </body>
+</html>

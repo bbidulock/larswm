@@ -359,12 +359,12 @@ for your own config.
 .B Complete list of config keywords
 
 Another way to get a default .larswmrc is to run larswm 
-with the -defaults flag. It will print out all the 
+with the \-defaults flag. It will print out all the 
 possible options with their defaults filled in, all you 
 have to do is uncomment and edit any lines you wish to 
 change. Rather than reproduce that here, you can create 
 your own up to date version by running the command
-larswm -defaults and piping it to a file.
+larswm \-defaults and piping it to a file.
 
 .SH Keyboard commands for all windows and subdesktops
 
@@ -695,8 +695,7 @@ subdesktop by clicking on it the following process is executed:
 
 1. The width of the two tracks are calculated. This is 
 by default set up so the left track uses 60% of the 
-screen width, but it can be configured in the 
-.larswmrc file. 
+screen width, but it can be configured in the .larswmrc file. 
 
 2. It calculates how many windows should be in each 
 track, one in the left track and the rest in the right.

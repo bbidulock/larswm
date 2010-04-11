@@ -141,25 +141,53 @@ configurereq (XConfigureRequestEvent * e)
 {
   XWindowChanges wc;
   Client *c;
+  int dpy_width, dpy_height;
 
   c = getclient (e->window, 0);
   e->value_mask &= ~CWSibling;
+
+  dpy_width  = DisplayWidth  (dpy, c->screen->num);
+  dpy_height = DisplayHeight (dpy, c->screen->num);
 
   if (c)
     {
       gravitate (c, 1);
 
-      if (e->value_mask & CWX)
-	c->x = e->x;
-
-      if (e->value_mask & CWY)
-	c->y = e->y;
-
       if (e->value_mask & CWWidth)
-	c->dx = e->width;
+      {
+	if (e->width <= dpy_width)
+	  c->dx = e->width;
+	else
+	  c->dx = dpy_width;
+      }
 
       if (e->value_mask & CWHeight)
-	c->dy = e->height;
+      {
+	if (e->height <= dpy_height)
+	  c->dy = e->height;
+	else
+	  c->dy = dpy_height;
+      }
+
+      if (e->value_mask & CWX)
+      {
+	if ((e->x + c->dx) < 0)
+	  c->x = 0;
+	else if (e->x > dpy_width)
+	  c->x = dpy_width - c->dx;
+	else
+	  c->x = e->x;
+      }
+
+      if (e->value_mask & CWY)
+      {
+	if ((e->y + c->dy) < 0)
+	  c->y = 0;
+	else if (e->y > dpy_height)
+	  c->y = dpy_height - c->dy;
+	else
+	  c->y = e->y;
+      }
 
       if (e->value_mask & CWBorderWidth)
 	c->border = e->border_width;

@@ -342,7 +342,7 @@ find_tools (ScreenInfo * s)
     {
       if (c->istool && (c->screen == s) && normal (c) &&
 	  (c->issticky || (c->desktop == s->desktop)) &&
-	  s->tile_resize[s->desktop])
+	  s->tile_resize[s->desktop] && !c->isfloat)
 	{
 	  int x1 = c->x - BORDER;
 	  int y1 = c->y - BORDER;

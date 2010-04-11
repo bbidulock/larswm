@@ -50,6 +50,7 @@ void resize_opaque (Client *);
 /* buttons.c */
 void button (XButtonEvent *);
 void spawn (ScreenInfo *, char *);
+void window_of_class (ScreenInfo *, char *, char *);
 void wmdelete (Client *, int);
 void hide (Client *);
 void unhide (int, int);

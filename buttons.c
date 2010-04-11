@@ -296,13 +296,13 @@ spawn (ScreenInfo * s, char *p)
 
 	  if (p)
 	    {
-	      execl (shell, shell, "-c", p, 0);
+	      execl (shell, shell, "-c", p, (char *) NULL);
 	      fprintf (stderr, "larswm: execl %s", shell);
 	      perror (" failed");
 	    }
 	  else
 	    {
-	      execlp ("xterm", "xterm", 0);
+	      execlp ("xterm", "xterm", (char *) NULL);
 	      fatal ("execlp xterm");
 	    }
 	}
@@ -311,6 +311,70 @@ spawn (ScreenInfo * s, char *p)
     }
 
   wait ((int *) 0);
+}
+
+int
+is_switchclass (Client * c, char *sc)
+{
+  int i;
+  char *inst;
+
+  if (!sc)
+    return 0;
+  
+  if (!c->class)
+    return 0;
+
+  if (strcmp (c->class, sc) == 0)
+    return 1;
+  
+  if (!c->instance)
+    return 0;
+  if (strcmp (c->instance, sc) == 0)
+    return 1;
+
+  if ((inst = strchr (sc, '~')))
+    {
+      inst++;
+      if (strncmp (c->class, sc, strlen (c->class)) == 0)
+	if (strncmp (c->instance, inst, strlen (c->instance)) == 0)
+          return 1;
+    }
+    
+  return 0;
+}
+
+void
+window_of_class (ScreenInfo *s, char *sc, char *p)
+{
+  Client *c, *last = 0;
+  for (c = clients; c; c = c->next)
+    {
+      if (is_switchclass(c, sc))
+        last = c;
+    }
+  if (last)
+    {
+      goto_desktop (s, last->desktop);
+      raise_tbar (s);
+      
+      if (last->isnotile) {
+	if (!s->notile_raised[s->desktop])
+	  raise_notile (last->screen);
+	top (last);
+	XMapRaised (dpy, last->parent);
+        active (last);
+      } else {
+	if (s->notile_raised[s->desktop])
+	  raise_tile (last->screen, 0);
+	top (last);
+	XMapRaised (dpy, last->parent);
+        tile_all (s);
+      }
+    } else {
+        if (p)
+          spawn (s, p);
+    }
 }
 
 void

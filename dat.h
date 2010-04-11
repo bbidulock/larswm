@@ -2,7 +2,7 @@
 /* Many changes by Lars Bernhardsson. */
 /* Less changes by Florian Forster <octopus@verplant.org> */
 
-#define VERSION		"larswm 7.5.3 [15-JUL-2004] by Lars Bernhardsson <lab@fnurt.net>"
+#define VERSION		"larswm 7.5.3+patches [22-JAN-2006] by Lars Bernhardsson <lab@fnurt.net>"
 
 #define BORDER		2
 #define TILE_PAD	2
@@ -44,6 +44,7 @@
 
 #define MAXAPPS		64
 #define MAXBTNAPPS	3
+#define MAXSWITCHCLASSES 64
 
 /* for zooming */
 #define DIM_VERT	1
@@ -176,6 +177,8 @@ struct Prefs
 
   char *application[MAXAPPS];
   char *btnapplication[MAXBTNAPPS];
+  char *switchclass[MAXSWITCHCLASSES];
+  char *switchclass_app[MAXSWITCHCLASSES];
 
   char *floatclass[MAXFLOATCLASS];
   char *toolclass[MAXTOOLCLASS];
@@ -310,6 +313,9 @@ struct Prefs
 
   KeySym application_key[MAXAPPS];
   unsigned long application_mod[MAXAPPS];
+
+  KeySym switchclass_key[MAXSWITCHCLASSES];
+  unsigned long switchclass_mod[MAXSWITCHCLASSES];
 };
 
 /* main.c */

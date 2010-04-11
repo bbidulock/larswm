@@ -618,6 +618,15 @@ dump_prefs (void)
   printf ("! larswm.application_key.0: KeySym\n");
   printf ("! larswm.application_mod.0: Modifier\n");
   printf ("!\n");
+
+  printf ("! Shortcuts to switch (focus) to window with defined name or class.\n");
+  printf ("!\n");
+  printf ("! larswm.switchclass.0: XTerm\n");
+  printf ("! larswm.switchclass_app.0: xterm\n");
+  printf ("! larswm.switchclass_key.0: KeySym\n");
+  printf ("! larswm.switchclass_mod.0: Modifier\n");
+  printf ("!\n");
+
   printf ("! End of larswm configuration.\n");
 }
 
@@ -764,6 +773,23 @@ load_prefs (char *filename)
 	prefs.application[i] = strdup (v.addr);
     }
 
+  for (i = 0; i < MAXSWITCHCLASSES; i++)
+    {
+      char res[32], cla[32];
+
+      sprintf (res, "larswm.switchclass.%d", i);
+      sprintf (cla, "Larswm.Switchclass.%d", i);
+
+      if (XrmGetResource (db, res, cla, &vt, &v))
+	prefs.switchclass[i] = strdup (v.addr);
+
+      sprintf (res, "larswm.switchclass_app.%d", i);
+      sprintf (cla, "Larswm.Switchclass_app.%d", i);
+
+      if (XrmGetResource (db, res, cla, &vt, &v))
+	prefs.switchclass_app[i] = strdup (v.addr);
+    }
+  
   for (i = 0; i < MAXTOOLCLASS; i++)
     {
       char res[32], cla[32];
@@ -960,6 +986,22 @@ load_prefs (char *filename)
 	prefs.application_mod[i] = get_mod (v.addr);
     }
 
+  for (i = 0; i < MAXSWITCHCLASSES; i++)
+    {
+      char res[32], cla[32];
+
+      sprintf (res, "larswm.switchclass_key.%d", i);
+      sprintf (cla, "Larswm.Switchclass_key.%d", i);
+
+      if (XrmGetResource (db, res, cla, &vt, &v))
+	prefs.switchclass_key[i] = XStringToKeysym (v.addr);
+
+      sprintf (res, "larswm.switchclass_mod.%d", i);
+      sprintf (cla, "Larswm.Switchclass_mod.%d", i);
+
+      if (XrmGetResource (db, res, cla, &vt, &v))
+	prefs.switchclass_mod[i] = get_mod (v.addr);
+    }
 
   if (XrmGetResource
       (db, "larswm.raise_notile_key", "Larswm.Raise_notile_key", &vt, &v))
