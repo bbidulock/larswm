@@ -56,6 +56,7 @@ void hide (Client *);
 void unhide (int, int);
 void unhidec (Client *, int);
 void renamec (Client *, char *);
+void move_other_desktop(Client *, int);
 
 /* client.c */
 void setactive (Client *, int);

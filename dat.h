@@ -320,6 +320,12 @@ struct Prefs
   KeySym close_key;
   unsigned long close_mod;
 
+  KeySym move_next_desktop_key;
+  unsigned long move_next_desktop_mod;
+
+  KeySym move_prev_desktop_key;
+  unsigned long move_prev_desktop_mod;
+
   KeySym two_on_left_key;
   unsigned long two_on_left_mod;
 
@@ -331,6 +337,9 @@ struct Prefs
 
   KeySym goto_desktop_key[MAXDESKTOPS];
   unsigned long goto_desktop_mod[MAXDESKTOPS];
+
+  KeySym move_desktop_key[MAXDESKTOPS];
+  unsigned long move_desktop_mod[MAXDESKTOPS];
 
   KeySym application_key[MAXAPPS];
   unsigned long application_mod[MAXAPPS];

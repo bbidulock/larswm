@@ -183,6 +183,12 @@ set_defaults (void)
   prefs.close_key = XK_w;
   prefs.close_mod = CLOSE_MOD;
 
+  prefs.move_next_desktop_key = XK_Next;
+  prefs.move_next_desktop_mod = MOVE_MOD;
+
+  prefs.move_prev_desktop_key = XK_Delete;
+  prefs.move_prev_desktop_mod = MOVE_MOD;
+  
   prefs.two_on_left_key = XK_Left;
   prefs.two_on_left_mod = GROW_MOD;
 
@@ -228,6 +234,42 @@ set_defaults (void)
 
   prefs.goto_desktop_key[11] = XK_F12;
   prefs.goto_desktop_mod[11] = DEFAULT_MOD;
+
+  prefs.move_desktop_key[0] = XK_F1;
+  prefs.move_desktop_mod[0] = MOVE_MOD;
+  
+  prefs.move_desktop_key[1] = XK_F2;
+  prefs.move_desktop_mod[1] = MOVE_MOD;
+  
+  prefs.move_desktop_key[2] = XK_F3;
+  prefs.move_desktop_mod[2] = MOVE_MOD;
+  
+  prefs.move_desktop_key[3] = XK_F4;
+  prefs.move_desktop_mod[3] = MOVE_MOD;
+  
+  prefs.move_desktop_key[4] = XK_F5;
+  prefs.move_desktop_mod[4] = MOVE_MOD;
+  
+  prefs.move_desktop_key[5] = XK_F6;
+  prefs.move_desktop_mod[5] = MOVE_MOD;
+  
+  prefs.move_desktop_key[6] = XK_F7;
+  prefs.move_desktop_mod[6] = MOVE_MOD;
+  
+  prefs.move_desktop_key[7] = XK_F8;
+  prefs.move_desktop_mod[7] = MOVE_MOD;
+  
+  prefs.move_desktop_key[8] = XK_F9;
+  prefs.move_desktop_mod[8] = MOVE_MOD;
+  
+  prefs.move_desktop_key[9] = XK_F10;
+  prefs.move_desktop_mod[9] = MOVE_MOD;
+  
+  prefs.move_desktop_key[10] = XK_F11;
+  prefs.move_desktop_mod[10] = MOVE_MOD;
+  
+  prefs.move_desktop_key[11] = XK_F12;
+  prefs.move_desktop_mod[11] = MOVE_MOD;
 }
 
 char *
@@ -613,6 +655,14 @@ dump_prefs (void)
   printf ("! larswm.close_key: %s\n", XKeysymToString (prefs.close_key));
   printf ("! larswm.close_mod: %s\n", show_mod (prefs.close_mod));
   printf ("!\n");
+
+  printf ("! larswm.move_next_desktop_key: %s\n", XKeysymToString (prefs.move_next_desktop_key));
+  printf ("! larswm.move_next_desktop_mod: %s\n", show_mod (prefs.move_next_desktop_mod));
+  printf ("!\n");
+  printf ("! larswm.move_prev_desktop_key: %s\n", XKeysymToString (prefs.move_prev_desktop_key));
+  printf ("! larswm.move_prev_desktop_mod: %s\n", show_mod (prefs.move_prev_desktop_mod));
+  printf ("!\n");
+
   printf ("! larswm.two_on_left_key: %s\n", XKeysymToString (prefs.two_on_left_key));
   printf ("! larswm.two_on_left_mod: %s\n", show_mod (prefs.two_on_left_mod));
   printf ("!\n");
@@ -635,6 +685,16 @@ dump_prefs (void)
 	  show_mod (prefs.goto_desktop_mod[0]));
   printf ("!\n");
 
+  printf ("! Move window to desktop shortcuts: Defaults are for the first 12 desktops, F1-F12.\n");
+  printf ("! If you have more than 12 desktops, you will have to add key bindings for them\n");
+  printf ("! or just use move prev/next desktop to move window to where you want.\n");
+  printf ("!\n");
+  printf ("! larswm.move_desktop_key.0: %s\n",
+	  XKeysymToString (prefs.move_desktop_key[0]));
+  printf ("! larswm.move_desktop_mod.0: %s\n",
+	  show_mod (prefs.move_desktop_mod[0]));
+  printf ("!\n");
+  
   printf ("! Application shortcuts:\n");
   printf
     ("! Use this to add keyboard shortcuts for the larswm.application[] entries.\n");

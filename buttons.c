@@ -478,3 +478,31 @@ renamec (Client * c, char *name)
 
   c->label = name;
 }
+
+/*
+ *  Move window to other screen.
+ *  `where' is:
+ *  -1: move next screen
+ *  -2: move prev screen
+ *  0, 1, .. prefs.desktops: move 0, 1,... screen
+ */
+
+void move_other_desktop(Client *c, int where)
+{
+  if (c == 0)
+    return;
+
+  if (where == -2)
+    c->desktop = (prefs.desktops + c->desktop - 1) % prefs.desktops;
+  else if (where == -1)
+    c->desktop = (c->desktop + 1) % prefs.desktops ;
+  else if (where <= prefs.desktops)
+    c->desktop = where;
+
+  if (c == current)
+    {
+      revert_window(c->screen);
+    }
+
+  update_desktop(c->screen);
+}

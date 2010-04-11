@@ -186,6 +186,16 @@ initkeys (Client * c)
 		  prefs.close_mod, c->parent, True, GrabModeAsync,
 		  GrabModeAsync);
 
+      if (prefs.move_next_desktop_key)
+        XGrabKey (dpy, XKeysymToKeycode (dpy, prefs.move_next_desktop_key),
+		  prefs.move_next_desktop_mod, c->parent, True, GrabModeAsync,
+		  GrabModeAsync);
+
+      if (prefs.move_prev_desktop_key)
+        XGrabKey (dpy, XKeysymToKeycode (dpy, prefs.move_prev_desktop_key),
+		  prefs.move_prev_desktop_mod, c->parent, True, GrabModeAsync,
+		  GrabModeAsync);
+
       /* same as root window grab */
       if (num_screens > 1)
 	{
@@ -267,6 +277,11 @@ initkeys (Client * c)
 		    prefs.switchclass_mod[y], c->parent, True, GrabModeAsync,
 		    GrabModeAsync);
 
+      for (y = 0; y < prefs.desktops; y++)
+        if (prefs.move_desktop_key[y])
+          XGrabKey (dpy, XKeysymToKeycode (dpy, prefs.move_desktop_key[y]),
+		    prefs.move_desktop_mod[y], c->parent, True, GrabModeAsync,
+		    GrabModeAsync);
     }
   else
     {
@@ -440,6 +455,10 @@ keyevent (XKeyEvent * e)
     unhide_last (s);
   else if (k == prefs.close_key && m == prefs.close_mod)
     wmdelete (current, 0);
+  else if (k == prefs.move_next_desktop_key && m == prefs.move_next_desktop_mod)
+    move_other_desktop(current, -1);
+  else if (k == prefs.move_prev_desktop_key && m == prefs.move_prev_desktop_mod)
+    move_other_desktop(current, -2);
   else if (k == prefs.two_on_left_key && m == prefs.two_on_left_mod)
     two_on_left (s);
   else if (k == prefs.two_on_left_shrink_key && m == prefs.two_on_left_shrink_mod)
@@ -476,6 +495,15 @@ keyevent (XKeyEvent * e)
 	      && (m == prefs.switchclass_mod[i]))
 	    {
 	      window_of_class (s, prefs.switchclass[i], prefs.switchclass_app[i]);
+	      return;
+	    }
+	}
+
+      for (i = 0; i < prefs.desktops; i++)
+        {
+          if (k == prefs.move_desktop_key[i] && m == prefs.move_desktop_mod[i])
+	    {
+              move_other_desktop (current, i);
 	      return;
 	    }
 	}
