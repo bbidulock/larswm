@@ -1,0 +1,2011 @@
+1.0 - Jun  3, 2000:   1. Initial version. Added tiling to 9wm.
+
+1.1 - Jun  5, 2000:   1. Added support for max size hints.
+                      2. Also, Things with width_inc and height_inc
+                         should look better now.
+
+1.2 - Jun  5, 2000:   1. Incorporated ideas/code from Benjamin Drieu's
+                         w9wm project, so now it has virtual desktops,
+                         currently hardcoded at four.
+
+1.3 - Jun  6, 2000:   1. Fixed a bug with PMaxSize windows that set hints
+                         after the window has been mapped.
+                      2. Fixed some other small bugs.
+
+1.4 - Jun  6, 2000:   1. Added support for Prev. Desktop.
+                      2. When toggling Auto ReTile, it toggles for the
+                         current desktop only! Now you can have some
+                         desktops auto tile, and some behave more
+                         traditional.
+                      3. Added support for Button4 and Button5.
+                         Button4 switches to previous desktop, Button5
+                         to next. If you have a wheel mouse, put:
+                         ZAxisMapping 4 5 in your XF86Config to use
+                         wheel up and down to switch desktops.
+                      4. Added the -rv option. Reverses black/white in
+                         all window manager menus/windows.
+
+1.4.1 - Jun  7, 2000: 1. Fixed the way transient windows are raised,
+                         now nested transients  work properly.
+                      2. renamed setstate() to wmsetstate() to avoid
+                         clashing with the function of the same name
+                         in stdlib.h.
+                      3. Fixed a bug in how transient windows are hidden
+                         and restored when moving between desktops.
+
+1.5 - Jun  8, 2000:   1. Added support for 'tools', applications you
+                         always want visible on the screen and not
+                         included in the retiling process.
+                         See -toolspace and -toolclass command line
+                         options.
+                      2. Fixed some minor cosmetic bugs. Using all
+                         screen space optimally.
+
+2.0 - Jun  9, 2000:   1. Added support for multi-screen displays.
+                         You can change desktop, default number of
+                         windows in left track, auto tiling on/off
+                         individually for each screen.
+                         You can also pick which screen you want
+                         toolspace reserved on.
+
+2.1 - Jun 15, 2000:   1. Added support for focusing a window without
+                         retiling everything, even if auto tiling
+                         is on for that screen/desktop.
+                         Just Ctrl-LeftClick on an inactive window.
+                      2. Added an option to always act as if window
+                         selects were done with Control held down.
+                      3. Added an option to balance tracks. This
+                         makes sure that both tracks have the same width
+                         and number of windows in them. Works nice
+                         with SkipFocus for an Oberon effect.
+
+2.2 - Jun 27, 2000:   1. Added the -nouserhints option. Now by default,
+                         if the user specifies the position of a window,
+                         it will not be included in the tiling process.
+                         This can be used instead of -toolclass as a
+                         way of not having to specify every kind of
+                         window you don't want tiled, or if you want
+                         some but not all windows of a class tiled.
+                      2. If the argument to -toolspace is a negative
+                         number, space is reserved at the top of the
+                         screen instead of the bottom.
+                      3. Added the -widetools option. This makes the
+                         reserved toolspace stretch across the screen,
+                         not just across the right track.
+
+3.0 - Jun 28, 2000:   1. Big cleanup. Removed -toolspace, -toolclass
+                         -toolscreen and -widetools options.
+                         Now tools are looked for at each retiling
+                         event, and anything that has had its
+                         position specified by the user is considered
+                         a tool.
+                         Where to set aside toolspace (top or bottom,
+                         right track only or full width) is calculated.
+                         When a tool pops up, it might end up on top
+                         of a tiled window, it will be properly tiled
+                         when the next retiling event occurs.
+
+3.1 - Jun 30, 2000:   1. Rearranged all menus. :)
+                         Here's how the menus work, they can be popped
+                         up anywhere on the root window, or over an
+                         inactive window.
+                         Mouse Button    Function/Menu
+                         ------------------------------------------------
+                         Right           Make clicked window active.
+                         Control+Right   Active, without retiling.
+
+                         Middle          Next Desktop.
+                         Shift+Middle    List all Desktops.
+                         Control+Middle  Previous Desktop.
+
+                         Left            Main menu, same as 9wm.
+                         Shift+Left      Hidden Windows.
+                         Control+Left    larswm functions.
+
+                         Shift+Control Left or Right shows version info.
+                         ------------------------------------------------
+                      2. Cleaned up the usage of pointers to active
+                         window on each desktop. This should eliminate
+                         one obscure crashing bug.
+                      3. When the current window goes away on a screen,
+                         it will not revert to a window on a different
+                         screen. If any focus change happens, it will
+                         be to the screen that was just manipulated.
+
+3.1.1 - Jul  3, 2000: 1. Minor tweak to how it remembers which window
+                         has focus on a particular destkop. Now tools
+                         will not be remembered. Makes for a little
+                         more consistent behaviour.
+
+3.2 - Jul  3, 2000:   1. Another bigger cleanup. The Toggle Balance Tracks
+                         option has been replaced with a generic layout
+                         menu. Control+Shift+Right mouse button brings
+                         it up. Right now the options are:
+                         Normal, 2/3 focused, 1/3 rest.
+                         Square, focused window is as wide as the screen
+                         is tall.
+                         Balanced, like the old balanced tracks, same width
+                         and number of windows in each track. The separate
+                         Left Track Num Windows option has been removed.
+                      2. Changed the default fonts. Now it will try
+                         "variable" and if that fails, "fixed".
+                      3. You can toggle whether larswm sees a client
+                         as a tool or not by Shift+Left clicking on it.
+
+4.0b1 - Jul  4, 2000: 1. Added keyboard support. Please see summary below.
+                         This is released as a beta version, as I'm still
+                         not sure if I got all those XKeyGrabs right...
+
+4.0b2 - Jul  4, 2000: 1. Uhh, I was sleepy when I put b1 out. Some pointers
+                         were omitted from some calls to initkeys, somehow
+                         this did not coredump on linux/sparc64...
+
+4.0b3 - Jul  4, 2000: 1. Added keyboard shortcuts for moving between
+                         screens. Control-PageUp and Control-PageDown goes back
+                         and forth between your screens (physical monitors).
+
+4.0b4 - Jul  4, 2000: 1. All Control+something shortcuts have been changed
+                         to Shift+Control+something, to lessen the risk
+                         of overlapping with applications.
+
+4.0b5 - Jul  4, 2000: 1. Added -bg and -fg options to set larswm menu and
+                         border colors. At this time there are no plans for
+                         more elaborate "theming" capabilities. :)
+                         Removed -rv, as it is obsolete now.
+                      2. Now Shift+Control is used as the modifier for all
+                         larswm functions. Consistency is a virtue.
+                         Alt-Tab is still provided since that seems to be
+                         a de facto standard.
+                      3. Cleaned up the names of the command line options.
+                         See below for the complete list.
+
+4.0b6 - Jul  4, 2000: 1. Fixed the bug where it wouldn't retile around tools
+                         as they pop up.
+                      2. Events on a different screen from the one containing
+                         the focused window will retile that screen.
+                      3. A window will not automatically get focus on a
+                         screen that does not have the mouse pointer in it
+                         unless that same screen also contains the currently
+                         focused window.
+                         One more step towards always knowing where your
+                         keystrokes are going... :)
+                      4. Default terminal program is xterm, even if 9term
+                         is installed. Use the -term option to set your
+                         preferred terminal.
+
+4.0 - Jul  5, 2000:   1. Updated docs. Everything else seems stable.
+                         Changed version number to 4.0.
+
+4.1b1 - Jul  7, 2000: 1. Added -display option.
+                      2. Cleaned up code. No more K&R C function definitions.
+		      3. Added restart/exit menu. Shift+Control+Right mouse.
+		      4. Added .larswmrc support! You can use the -defaults
+		         option to have it print out a properly formatted
+			 config file that you can edit to your taste.
+			 cd $HOME
+			 larswm -defaults > .larswmrc
+			 Documentation on this will be updated when features
+			 have been finalized.
+
+4.1b2 - Jul  7, 2000: 1. Added the larswm.badclass keyword to rc format.
+                         Use this to force a window of the specified class
+			 to be tiled even if it insists that the user
+			 specified the position. This will help with
+			 applications like kvirc and LyX.
+
+4.1b3 - Jul  7, 2000: 1. Added the larswm.desktops keyword to rc format.
+                         This will let you set how many virtual desktops
+			 you want per physical screen.
+			 You can chose between 1 and 32, default is 4.
+
+4.1b4 - Jul  7, 2000: 1. Added the larswm.application_# keyword to rc format.
+                         This lets you add commands to be executed from the
+			 application menu, Shift+Control+Left mouse.
+			 Enter them like this, the number on the end decides
+			 which order they will be in, the lines can appear
+			 in any order in the rc file and there can be gaps
+			 in the number sequence.
+			 larswm.application_0: netscape
+			 larswm.application_1: xcalc
+		      2. Fixed a design flaw in how badclass is loaded from rc.
+		         Same numbering rules applies as for application
+			 resource lines.
+		         You need to enter them like this:
+			 larswm.badclass_0: BadApp1
+			 larswm.badclass_1: BadApp2
+		      3. Changed max number of applications, badclasses and
+		         virtual desktops to 64. At least for desktops, think
+			 of 64 as the theoretical max. I can't imagine actually
+			 having 64 desktops and trying to find your windows. :)
+
+4.1b5 - Jul  7, 2000: 1. Fixed a bunch of typos in prefs.c. Now keyboard mapping
+                         will really work for all functions.
+			 This should be the last beta in the 4.1 series.
+			 *cross fingers*.
+		      2. If you typo the key symbol in the rc file, it will
+		         reset all defaults, so if you seem to not get your
+			 preferences, check the key entries.
+
+4.2 - Jul  8, 2000:   1. Added a simple man page. It's mostly there for
+                         command line options, and to point to where the
+			 real documentation can be found.
+		      2. Changed version from beta 4.1 to stable 4.2.
+
+4.3b1 - Jul  9, 2000: 1. Fixed a bug with -display, where it wouldn't
+                         open new windows on the correct display.
+		      2. Changed number of desktops to 32 to save memory
+		         and startup time. Now supports max 8 physical
+			 screens. Both of these numbers can be changed
+			 in dat.h if needed.
+		      3. Added configurability per screen/desktop for
+		         the following resources:
+			 larswm.auto_retile
+			 larswm.skip_focus
+			 larswm.layout
+			 The format for these resources should now be
+			 larswm.resource[x][y]: value
+			 where x is screen number and y is desktop number.
+			 0 means first screen/desktop.
+			 if you omit one number, it means all of the
+			 screens/desktops. Example:
+			 larswm.auto_retile[][3]: false
+			 means do not auto retile on virtual desktop 3
+			 on all physical screens.
+		      4. Changed the format of application, badclass and
+		         goto_desktop keyboard shortcut resources
+			 to be more consistent with the other indexed
+			 formats.
+
+4.3b2 - Jul  9, 2000: 1. Changed the order in which indexed prefs are
+                         looked for, making it possible to specify for
+			 instance:
+			 larswm.auto_retile[][]: false
+			 larswm.auto_retile[0][]: true
+			 which would only auto retile on the first
+			 physical screen.
+
+4.3b3 - Jul  9, 2000: 1. Added the resource larswm.left_track_width[][]
+                         which sets how wide the left track should be when
+			 the default layout is active in the specified
+			 screen/desktop. The unit is percent of screen
+			 width, the valid choices are 5-95 and the
+			 default is 66.
+		      2. Added resource larswm.left_track_numwindows[][]
+		         which sets the number of windows to tile in the
+			 left track when using the Default layout on
+			 the specified screen/desktop. At least 1, and
+			 default is 1.
+		      3. Indexed resources can be specified in these ways:
+		         res = v        - All screens and all desktops.
+			 res[][] = v    - Same as above.
+			 res[d] = v     - All screens and desktop #d.
+			 res[][d] = v   - Same as above.
+			 res[s][] = v   - Screen #s and all desktops.
+			 res[s][d] = v  - Screen #s and desktop #d.
+			 More specific indexing overrides more generic.
+			 This is true for all resources that has [][] after
+			 the name in the -defaults printout.
+
+4.4 - Jul 10, 2000:   1. Split change log into its own file.
+                      2. Upped version to 4.4 and announced it as stable.
+
+4.4.1 - Jul 10, 2000: 1. Allow down to zero width borders.
+                      2. Add larswm.toolclass[#] option. Up to 64 classes
+		         of windows that will not be tiled even if USPosition
+			 is not set.
+		      3. Cleaned up layout menu.
+
+4.4.2 - Jul 11, 2000: 1. Now correctly handles windows that set the input
+                         member of the WM_HINTS property to False. These
+			 windows will not get focus, either automatically
+			 or by clicking on them.
+
+4.4.3 - Jul 12, 2000: 1. Simplifed the way window borders are drawn. Now
+                         they consist of only one color at a time, and
+			 borders can really be 0 width.
+		      2. Cleaned out some old 9term stuff, since hold mode
+		         isn't shown with the new borders anyway.
+		      3. larswm.inset was removed because of 1 and 2.
+		      4. Added larswm.tile_pad, which will set how many
+		         pixels there should be between the windows when
+			 they are auto tiled. Default is 2.
+		      5. Changed the default for larswm.blitcursors and
+		         larswm.grey to False.
+
+4.4.4 - Jul 12, 2000: 1. Augh! A bug crept in while I wasn't watching.
+                         Crashing when xev and possibly other apps open
+                         is now fixed.
+                      2. System specific include files have been replaced
+                         with Xos.h as much as possible.
+
+4.9b1 - Jul 13, 2000: 1. Major tweaking! Now can show window title bars at
+                         the top of the windows. No fancy decorations or
+			 buttons, just a label to help keep track of all
+			 those xterms. :) Default is off, turn on with:
+			 larswm.titles: True
+			 in the .larswmrc file.
+			 When clicking a mouse button in the title bar, it
+			 means does the same thing as if you clicked on an
+			 inactive window. In other words, no special things
+			 like dragging a window by the title bar. I'm tempted
+			 to say that if you really need that, this might not
+			 be the best window manager for you. :)
+		      2. As a side effect of adding title bars, I've had to
+		         really dig into the code (grab.c still scares me)
+			 and make small modifications here and there.
+			 Hopefully I didn't break it too bad, but I think
+			 it might be a good idea if this stays beta for at
+			 least a week or so. :)
+
+4.9b2 - Jul 13, 2000: 1. Moved title bar to bottom edge of windows.
+                         This might seem weird, but I kinda like it.
+			 Remember, title bars are optional. They will
+			 not appear unless you specifically add this line
+			 to your .larswmrc:
+			 larswm.titles: True
+
+4.9b3 - Jul 13, 2000: 1. Added the following configurable keyboard shortcuts.
+                         Shift+Control+comma: shrink left track.
+                         Shift+Control+period: expand left track.
+                         Shift+Control+Home: maximize left track.
+                         Shift+Control+End: restore left track.
+			 Use larswm -defaults to see resource names.
+
+4.9b4 - Jul 15, 2000: 1. Added the larswm.tile_resize[][] option, with a
+                         default of True. If this is false, windows are not
+			 actually resized when put in the right track,
+			 but instead just stacked on top of eachother, with
+			 a portion at the top of each window visible.
+			 Use this on screens where you run netscape for
+			 instance, to speed up refocusing (netscape won't
+			 have to recalculate layout since it's not resized).
+		      2. Added a small status display to the title bar of
+		         the focused window. The display looks like this:
+			 +0+ -1- [2] -3-  (2) {14}
+			 This means:
+			 Desktop 0 has open windows.
+			 Desktop 1 does not have open windows.
+			 Desktop 2 is currently visible.
+			 Desktop 3 does not have open windows.
+			 There are 2 hidden windows on this screen.
+			 There are 14 windows on other screens.
+			 If there are no windows on other screens, or no
+			 hidden windows, the () and {} will not be displayed.
+			 I could have made icons for this, but... looking
+			 fancy is not really the goal here. :)
+		      3. Small improvement in how it handles tool windows,
+		         they will now always stay on top of other windows,
+			 except the focused window. Useful when using the
+			 tile_resize: False option.
+		      4. Transient windows will open on any desktop, but as
+		         soon as you switch desktop, it will only be visible
+			 on the same desktop as its parent window.
+			 This way you shouldn't miss any important messages,
+			 while at the same time not have to find stray dialog
+			 boxes hanging around the wrong desktop.
+
+4.9b5 - Jul 15, 2000: 1. Fixed a small bug where toolspace would not be
+                         calculated when in tile_resize: False mode.
+
+4.9b6 - Jul 15, 2000: 1. Fixed a subtle bug with override_redirect windows
+                         who grab keyboard focus (for example, the netscape
+			 menubar) and end up underneath the main window.
+			 This was fixed by changing how the retiling event
+			 is generated. No retiling will be done as a result
+			 of any focus event, but as a result of the mouse
+			 click instead.
+		      2. Changed the 'toggle toolstatus' from Shift+Left
+		         mouse to making it a menu choice in the tiling menu.
+			 If you select 'Toggle Tool Window', the cursor
+			 changes into the crosshairs. Just right click on
+			 the window you want to toggle between being
+			 considered a tool window or not.
+		      3. Removed some redundant initkeys() calls.
+		      4. Fixed a bug in how number of hidden windows were
+		         counted. Now also counts hidden tools.
+
+4.9b7 - Jul 16, 2000: 1. Do not waste screen space for the nonexistent
+                         titlebar when tiling shaped windows.
+		      2. Tool windows will not have title bars.
+		      3. Changed a couple of default limits.
+		         Now supports 4 physical screens of 16 virtual
+			 desktops each. Edit dat.h if you need more.
+
+4.9b8 - Jul 16, 2000: 1. Cleaned up XSetInputFocus calls. timestamp()
+	                 was removed.
+		      2. Cleaned up a couple of menus. No more menu titles.
+		         Will not popup hidden windows menu unless there are
+			 hidden windows. Same for Applications.
+		      3. Fixed a rare bug in title bar drawing that would
+		         show up sometimes when the window would be mapped
+			 before the WM_NAME was set.
+		      4. Adjusted some defaults. 32 apps, 32 hidden windows.
+		         32 badclass and toolclass entries. Edit dat.h if
+			 you need more.
+
+4.9b9 - Jul 17, 2000: 1. Swapped Maximize and Restore left track keys.
+                         Default is now: Shift+Control+End = maximize and
+			 Shift+Control+Home = restore default.
+			 I find this more intuitive.
+		      2. Removed larswm.grey and larswm.blitcursors options.
+		         Use xsetroot or something like that to set screen
+			 background. Uses only blit lookalike cursors.
+		      3. Removed some redundant code dealing with focus.
+		         Added simplified and more predictable way to revert
+			 to previously active window when auto tiling is off.
+		      4. Now properly raises windows when using the
+		         keyboard shortcuts to move to next and previous
+			 windows if not in auto retile mode.
+		      5. When on a desktop without auto retiling, clicking
+		         a window will focus and raise. Control+clicking
+			 will focus without raising it. This behaviour
+			 is reversed if the desktop also has skip_focus set.
+
+5.0 - Jul 17, 2000:   1. Version changed to stable 5.0.
+
+5.0.1 - Jul 18, 2000: 1. Using only X11 built-in mouse pointers.
+                         The cursor.c file was removed from the distribution.
+		      2. Fixed a small bug where if you had auto retiling off
+		         an app that starts iconified still wanted to be
+			 placed on the desktop.
+		      3. Removed the 'exit' and 'restart' command line
+		         options. Exit using the exit/restart menu which
+			 is on Shift+Control+Right mouse button.
+		      4. Simplified how it determines what is the next
+		         and previous window, and how it reverts to the
+			 previous window in the stacking order when the
+			 active window closes. No more having to hit
+			 Shift+Control+Up or Down twice after jumping to
+			 a different screen sometimes.
+		      5. Code cleanup. Removed little snippets here and
+		         there that wasn't being used.
+
+5.0.2 - Jul 18, 2000: 1. By popular demand, command line exit and restart
+                         are back. :)
+		      2. Some more tweaks to focus handling when warping
+		         between screens. Still not perfect.
+		      3. Added the larswm.run_dialog option. This can be
+		         used to specify an application to use as program
+			 launcher.
+		      4. Added the larswm.run_dialog_key and run_dialog_mod
+		         options to set the keyboard shortcut for the
+			 run dialog.
+		      5. Fixed a bug with Goto desktop #X shortcuts.
+
+5.1b1 - Jul 19, 2000: 1. Added the larswm.notileclass[#] option. You can
+                         add up to 32 window classes that will not be tiled
+			 but instead kept in their own group on each desktop.
+		      2. Added the larswm.raise_notile_key and mod options
+		         to set the keyboard shortcut you want to use to
+			 raise all untiled windows on the current desktop.
+			 If there is a current window, and it is an untiled
+			 window, then this function will lower all untiled
+			 windows. The default key is Shift+Control+BackSpace.
+		      3. When using previous and next window shortcuts,
+		         only move to another window of the same type as
+			 far as notileclass goes.
+		      4. The effect is like a separate desktop within
+			 every desktop that is for untiled windows only.
+			 Each screen/desktop remembers if tiled or untiled
+			 windows were last used.
+
+5.1b2 - Jul 19, 2000: 1. Added the larswm.application_key[number] and
+                         larswm.application_mod[number] options. Use this to
+			 create keyboard shortcuts to the corresponding
+			 larswm.application[number] entries. Make sure you
+			 use the same number for both the app and the key.
+		      2. Removed the larswm.run_dialog options, as they
+		         are now redundant.
+		      3. Changed the way the larswm.badclass, toolclass
+		         and notileclass options work. If the value contains
+			 a tilde (~) then in addition to checking if the
+			 class equals the value, it also checks for if
+			 the class equals what's before the tilde and the
+			 instance equals what's after the tilde.
+			 An example, to associate all of netscape's download
+			 windows with the untiled subdesktop, do this:
+			 larswm.notileclass[0]: Netscape~Download
+
+5.1b3 - Jul 19, 2000: 1. Changed the way it deals with XConfigureRequest
+                         events. They do not trigger a retile event by
+		         themselves anymore. If one of your windows seem
+		         to get itself out of place, try using the
+			 'Re-Tile All Now' menu entry on the right mouse
+			 button. The reason for this change is that some
+			 apps (Netscape is one) seem to be trying to
+			 resize itself until it succeeds, basically locking
+			 the window manager up with configurereqs.
+			 If Netscape opens a new browser window with a set
+			 size and position, it doesn't deal well with being
+			 unmapped either. I suggest not moving to a new
+			 desktop until you've closed all netscape secondary
+			 windows.
+			 Also, having a larswm.badclass entry for Netscape
+			 helps, as Netscape lies about the user selecting
+			 the size and position of the window, making it
+			 look like a tool window to larswm.
+			 After trying various ways of dealing with this,
+			 I can only conclude that Netscape is not being
+			 a polite client, in that it doesn't let the window
+			 manager decide where and when to map its windows.
+
+5.1b4 - Jul 20, 2000: 1. Added the larswm.default_notile and
+                         larswm.dotileclass[] options. If default_notile
+			 is true, then all new windows are placed in the
+			 untiled desktop, unless their class/instance
+			 has been specified with a dotileclass line.
+			 This can be good if you use alot of non tiling
+			 friendly apps.
+
+5.1b5 - Jul 20, 2000: 1. If you hold down Shift while left-clicking a window
+                         that does not have focus, it will get focus even if
+			 its hints suggested it does not want focus. This
+			 is useful if you use Xnest.
+
+5.1b6 - Jul 20, 2000: 1. Removed the automatic determination of tool status.
+                         Nothing will be treated as a tool window unless its
+			 class/instance has been specified with a
+			 larswm.toolclass[] entry. This will in the end make
+			 for more predictable behaviour with bad apps that
+			 lie about USPosition.
+		      2. Removed the larswm.tile_tools option.
+		      3. Removed the larswm.badclass[] option.
+		      4. Changed default_notile to True, as I believe this
+		         to be a better way to do things. For the old
+			 behaviour of tiling every window by default, put
+			 larswm.default_notile: False
+			 in your .larswm.
+		      5. When a window is opened on the untiled desktop,
+		         whether you need to manually place it or not is
+			 decided like this:
+			 If auto_retile is ON for the current desktop:
+			 	* If the window has had its position set
+				  by the user, map it there.
+				* If no position has been set, center it.
+			 If auto_retile is OFF
+				* If the window has had its position set
+				  by the user, map it there.
+				* If no position has been set, let the
+				  user place an outline of the window
+				  where (s)he wants it to be mapped.
+		      6. Put max number of toolclasses, notileclasses and
+		         hidden windows back to 64 by default.
+		      7. Minor tweak to how it unhides windows. Will not
+		         look for a hidden window that was unmapped by the
+			 virtual desktop functionality. Improves performance
+			 with apps that sends maprequests until their window
+			 is mapped.
+
+5.1b7 - Jul 21, 2000: 1. Greatly simplified tool handling. Now all tools
+                         are automatically assigned to the untiled
+			 subdesktop. No need to arrange tiled windows
+			 around tools.
+			 Tool windows are exactly like any other untiled
+			 window, except they have no title bar, they are
+			 visible on all virtual desktops and they are always
+			 kept on top of the other windows on the untiled
+			 subdesktop, except the window that has focus.
+
+5.1b8 - Jul 21, 2000: 1. Changed the display on the title bar to:
+                         {#}  (#)  [#]  # T
+			 Which lists the number of windows on:
+			 {other screens}  (hidden)  [other desktops]
+			 current desktop number and whether you are on the
+			 (T)iled or (U)ntiled subdesktop.
+		      2. Added keyboard shortcuts for moving windows on the
+		         untiled desktop.
+			 Shift+Control + number on keypad puts it in a
+			 general area of the screen, 7 = northwest,
+			 8 = north center etc.
+			 Shift+Alt + number on keypad moves it 5% of the
+			 screen size in that direction.
+			 8 = up, 2 = down, 4 = left and 6 = right.
+			    Sun users: This won't work with the standard
+			    keyboard mapping. Please see the README file
+			    for an example of how to use xmodmap to fix it.
+
+5.1b9 - Jul 21, 2000: 1. Added keyboard shortcuts for zooming windows.
+                         By default these:
+			 Shift+Alt+keypad Home = Vertical.
+			 Shift+Alt+keypad End = Horizontal.
+			 Shift+Alt+keypad 5 = Both. (Maximize)
+	                 These keys are of course configurable like
+			 the others.
+
+5.1b10 - Jul 22, 2000:1. Lots of small tweaks to how it handles the tiled
+                         and untiled subdesktops, how it reverts back to
+			 a window when one closes. No new options, just
+			 more logical behaviour.
+		      2. Added the Re-Scan Windows option on the tiling
+		         menu. Use this if you get windows that somehow
+			 aren't managed by larswm. Some versions of
+			 The Gimp will cause this when resizing images.
+
+5.1b11 - Jul 22, 2000:1. Even more fine tuning of the way it handles
+                         untiled windows when they are mapped.
+
+5.1b12 - Jul 23, 2000:1. Fixes a small focus problem with multi-head
+                         displays. Move Re-Scan Windows menu entry to
+			 the larswm menu (exit/restart).
+		      2. Changed title bar status display to show just
+		         virtual desktop number and subdesktop (T or U).
+		      3. Fixed minor window focus reverting problem.
+
+5.1b13 - Jul 23, 2000:1. Final focus handling code. When a window closes,
+                         reverts back to the last focused window regardless
+			 of which subdesktop it was on. If not on same,
+			 toggles subdesktops before reverting focus.
+
+5.2 - Jul 24, 2000:   1. Updated README, docs, and bumped version number.
+
+5.2.1 - Jul 24, 2000: 1. Fixed a crashing bug in the window reverting code.
+                      2. Cleaned up code that checks class/instances.
+
+5.2.2 - Jul 25, 2000: 1. Fixed a bug where looking up a window class would
+                         fail if there was no instance specified.
+
+5.3b1 - Jul 25, 2000: 1. Split keyboard handling into its own file, keys.c.
+		      2. Added the option larswm.bar, which will enable the
+		         status bar at the bottom of the screen.
+			 The left portion of the bar contains the title of
+			 the focused window. The right end contains this:
+			 [0:4] 1:-  2:1  3:-   Untiled   (1)  {4}
+			 Which means:
+			 Desktop 0 is active, it has 4 windows.
+			 Desktop 1 has no windows, 2 has one window,
+			 and 3 has none. The Untiled subdesktop is active
+			 on the current virtual desktop, and there are one
+			 hidden window on this screen, and 4 windows on
+			 other screens.
+                      3. Added option larswm.reserve, which will make window
+		         tiling leave the specified number of pixels unused
+			 at the bottom of the screen. If the status bar is
+			 visible, this reserves pixels above the bar.
+		      4. Added option larswm.res_track, which lets you specify
+		         which track you want space reserved in, the default
+			 is Right and it can be set to Left or Both.
+
+5.3b2 - Jul 25, 2000: 1. Removed a redundant call to draw_tbar().
+
+5.3b3 - Jul 25, 2000: 1. Added the larswm.auto_reserve option.
+                         This is similar to how it used to work, except it
+			 reserves space at the bottom of the screen only.
+			 This feature is on by default.
+		      2. Mouse clicks on the status bar:
+		         Left previous desktop, Right next desktop,
+			 Middle toggle tiled/untiled desktop.
+		      3. Made status bar be on by default. To disable, use:
+		         larswm.bar: False
+		      4. Tweaked status bar to be as thin as possible.
+		      5. Windows that have south (or southwest/southeast)
+                         gravity will gravitate above the status bar.
+
+5.4 - Jul 25, 2000:   1. Version changed to 5.4 stable.
+
+5.4.1 - Aug 2, 2000:  1. When centering windows on the untiled desktop,
+                         the top of the window will never be above the top
+			 of the screen.
+		      2. Fix a small typo on prefs.c
+		      3. Added option larswm.stickyclass[] which makes
+		         windows of the specified class sticky, that is they
+			 are visible on all virtual desktops.
+		      4. Added option larswm.sticky_notile which makes
+		         all windows on the untiled subdesktop sticky by
+			 default.
+
+5.5b1 - Aug 4, 2000:  1. Added the Zoomed layout option. This arranges the
+			 tiled subdesktop so the active window is taking up
+			 most of the screen, on top of the others, while
+			 the rest are tiled underneath in the same way that
+			 the Balanced layout works.
+
+5.5b2 - Aug 4, 2000:  1. Removed Zoomed layout option. Not really useful in
+                         practice, and features for no other reason than
+                         feature count will not be tolerated. :)
+                      2. Following the same logic, window title bars are
+                         gone, since their functionality is better handled
+                         by the status bar. Removed larswm.titles option.
+                      3. Changed the status display on the bar slightly.
+                         The letters between the <> means:
+                         T = tiled active, U = untiled active
+                         A = auto tiling on, R = tile resizing on,
+                         S = skip focus on.
+                         Layouts: d = Default, s = Square, b = Balanced.
+                         Also put the window title at the left end of the bar.
+
+5.5b3 - Aug 5, 2000:  1. Added option larswm.lazy_notile, which will make
+                         the untiled subdesktop use a lazy focus follows
+                         mouse scheme. This can also be toggled from the
+			 Control menu (Control+Right mouse click).
+		         Also added the letter 'L' to the status bar
+		         display between <>. This indicates whether
+			 lazy_notile is on for the current virtual desktop.
+                      2. Added the Control+Alt+Left mouse click, which will
+                         just raise the selected window without changing
+                         focus to it. It can be used on the active window
+                         if in lazy_notile mode as a way to bring a window
+                         to the front, since a window is not raised
+                         automatically when the mouse enters it and gives
+                         it focus. This all applies to the untiled
+			 subdesktop only.
+		      3. Added two new keyboard shortcuts:
+		         Control+Alt+z hides the current window.
+			 Control+Alt+w closes the current window.
+		      4. Made all parts of the status bar visible at all
+		         times. A '-' in a position signifies "off" or "0".
+
+5.5b4 - Aug 5, 2000:  1. Fixed a crashing bug in the lazy focus code.
+		      2. Control+Alt+x unhides the last hidden window.
+
+5.5b5 - Aug 6, 2000:  1. A few tweaks to focus and subdesktop handling when
+			 mapping windows. It should now act in a more useful
+			 way when non-input windows like ghostscript opens.
+
+5.5b6 was thrown out.
+
+5.5b7 - Aug 7, 2000:  1. Fix for shortcut keys for desktops and applications
+			 when they would use the same key but different
+			 modifiers.
+		      2. Added a note in the README about mode lock keys and
+			 how they must be off when using larswm shortcuts.
+			 This is a known issue that hopefully will be fixed
+			 some day.
+
+5.6 - Aug 7, 2000:    1. Made the Shift-Alt-Button1 be a toggle instead of
+			 always raising the window. It will now raise a window
+			 unless the window is already on top, in which case
+			 it will lower it instead.
+		      2. Changed version to stable 5.6.
+
+5.6.1 - Aug 10, 2000: 1. Do not automatically revert focus to tool windows.
+
+5.6.2 - Aug 12, 2000: 1. Fixed a bug where it would retile when using keyboard
+			 shortcuts to select next and previous window even if
+			 skip_focus was on.
+
+5.6.3 - Aug 21, 2000: 1. Simplified window mapping. Now does not require user
+			 interaction with the mouse before mapping a window.
+			 A window that has not had its position set will be
+			 centered on the screen.
+		      2. Fixed a minor bug where windows would not retile
+			 when unhiding a tiled window using the keyboard
+			 shortcut.
+
+5.6.4 - Aug 27, 2000: 1. Changed the status bar a bit. gprof showed alot of
+			 time spent in sprintf, so all those calls were
+			 removed, and the display simplified. It now looks
+			 like this in the lower right corner:
+			 ----------------------------+
+			    Desktop Name  <UARSLdH>  |
+			 ----------------------------+
+			 Where the new item is 'H', which is there if there
+			 are hidden windows on this screen.
+		      2. Desktops can be named! By default they are labeled
+		         Zero, One, Two etc. but this can be changed with the
+			 larswm.dtname[][] option. Same rules apply as for
+			 the other [][] indexed resources, that is first
+			 index is screen, second is desktop.
+
+5.6.5 - Aug 28, 2000: 1. Now sets input focus on a screen when the mouse
+			 pointer enters a window on it, if that screen does
+			 not already contain the window with input focus.
+
+5.6.6 - Aug 29, 2000: 1. Simplified the way it fetches the next event.
+			 This seems to make it a bit more stable when dealing
+			 with lots of events, like holding down the 'next
+			 desktop' key for example. Removed the getevent()
+			 function from main.c and use XNextEvent directly
+			 in event.c.
+		      2. Moved a call to initkeys() so it is only called
+		         once when a window is first managed.
+
+5.6.7 - Aug 30, 2000: 1. Removed the larswm.auto_retile[][] option, since
+			 it is obsoleted by the untiled subdesktop.
+		      2. Removed all code dealing with auto_retile being
+		         on or off. Now assumed on for all desktops.
+		      3. Changed the way windows are hidden when switching
+		         virtual desktops. Now they are not actually
+			 unmapped, but instead moved outside the visible
+			 screen area.
+		      4. Made lazy focus on the untiled subdesktop be on
+		         by default.
+		      5. Only update the status bars when needed. This
+		         also improves performance when dealing with
+			 lots of events.
+		      6. Mode flag display now shows:
+		         <RSLdH>
+			 Resize on/off, SkipFocus on/off, LazyNotile on/off,
+			 current layout and Hidden Windows menu has entries.
+
+5.6.8 - Aug 30, 2000: 1. Fixed small bug where the status bar would not
+			 redraw when the title of the current window changes.
+
+5.6.9 - Sep 1, 2000:  1. Fixed a small bug where the status bar would not
+			 be redrawn when it became unobscured.
+		      2. Removed the layout option. Now always uses what
+		         used to be called 'Default'. Removed code supporting
+			 more than one window in the active track.
+		      3. Control-Alt-Button2 now toggles between tiled and
+		         untiled subdesktops.
+		      4. Removed the code for specifying tool space. Now
+		         always calculates before retiling.
+			 reserve, res_track and auto_reserve options gone.
+
+5.7b1 - Sep 2, 2000:  1. Added the larswm.dtclass[] and larswm.dtnum[]
+			 options that let you associate a window
+			 class/instance with a virtual desktop number.
+			 For example:
+                             larswm.dtclass[0]: Netscape
+                             larswm.dtnum[0]: 1
+                         would associate Netscape windows with the second
+			 virtual desktop.
+		      2. When a window is first mapped, if it wants to be
+		         on a different desktop than the current, that
+			 desktop is first made active before mapping the
+			 window.
+		      3. Fixed a small annoyance with Control-Alt-Button1
+			 where if you lowered a window, you couldn't raise
+			 it this way even if a portion was visible.
+		      4. Added the larswm.bar_cmd and larswm.bar_interval
+		         options. This will run a command every X seconds
+			 showing the first line of output in the status
+			 bar. Up to 80 characters will be shown, if you
+			 need more, use another process that puts a line,
+			 properly scrolled, in a file and cat that file to
+			 get the data for the display. They key is to
+			 minimize the time that the command larswm runs
+			 takes, or the system will feel slow.
+			 The external command is responsible for removing
+			 any non printable characters, including newline.
+		      5. Yet more improvements to how it handles focus
+		         when windows are mapped on the untiled subdesktop
+			 when lazy_notile is on. Now it should hopefully
+			 "do the right thing" both with transients and
+			 secondary non-transients (like 'xv' does).
+		      6. The external command is only run if there are
+		         two or fewer events waiting to be processed. This
+			 should prevent the wm from being unecessarily
+			 slow when dealing with lots of events.
+
+5.7b2 - Sep 3, 2000:  1. Do not change the title bar colors for tiled and
+			 untiled subdesktop, instead show 'T' or 'U' and
+			 leave it inverted all the time. This makes for a
+			 cleaner look I think.
+		      2. Got rid of focus shifting between screens. Was
+		         more confusing than useful. Now you have to
+			 either use keyboard shortcuts, or select a window
+			 on the screen you want to go to.
+			 Optional lazy focus follows mouse on untiled
+			 subdesktop is unchanged.
+
+5.7b3 - Sep 3, 2000:  1. Changed larswm.bar_cmd to larswm.bar_file. Now
+			 reads the first line of a file instead of
+			 executing a command. This has two benefits:
+			 1. Hanging command would also hang the wm.
+			 2. This requires no fork/exec in larswm.
+			 Included in the tarball and RPM is an example of
+			 how to do this in the file sample.barinfo.
+
+5.7b4 - Sep 3, 2000:  1. Removed larswm.bar_file and larswm.bar_interval
+			 options.
+		      2. Added support for a FIFO in $HOME/.larswmfifo
+		         that is checked once per second for data.
+			 Each time up to 80 characters are read, if there
+			 are more available in the FIFO, they will be read
+			 next time (in one second).
+			 No option needs to be specified in .larswmrc as
+			 this feature will be automatically used if the
+			 FIFO exists.
+			 sample.barinfo updated to use the FIFO.
+		      3. Added the -p command line option to specify
+		         a different named pipe to use for the status
+			 bar FIFO.
+
+5.7b5 - Sep 3, 2000:  1. Minor fix. Now removes leading and trailing
+			 spaces and unprintable characters from the
+			 status bar message field.
+
+5.7b6 - Sep 3, 2000:  1. Fixes an obscure bug that could make it lock
+			 up when unmapping a window.
+
+5.7b7 - Sep 4, 2000:  1. Code cleanup in the way preferences are looked
+			 for. You need to change your indexed resources
+			 like this:
+			 BEFORE:  larswm.tile_resize[1][2]: False
+			 AFTER:   larswm.1.2.tile_resize: False
+			 BEFORE:  larswm.toolclass[3]: XClock
+			 AFTER:   larswm.toolclass.3: XClock
+			 This requires alot less code to achieve the
+			 same result as before, that is, more specific
+			 overrides less specific. If you had for instace
+			 larswm.tile_resize[][5]: True
+			 you should change it to
+			 larswm.*.5.tile_resize: True
+			 This is basically just using the X resource
+			 manager correctly, and I prefer correctness
+			 over backwards compatibility. :)
+		      2. I've run ElectricFence on it, and no memory
+		      	 overruns/underruns have been detected so far
+			 after fixing one strcpy call in the resource
+			 loading code.
+		      3. Minor performance tweak in mouse_on_screen,
+		         now spends very little time there on single
+			 screen systems.
+
+5.7b8 - Sep 4, 2000:  1. Added a call to setlocale() so non-standard
+			 characters should be visible on the status
+			 bar.
+		      2. Updated sample.barinfo to show how to get
+		         stock quotes from Yahoo and display them
+			 on the status bar.
+
+5.7b9 - Sep 4, 2000:  1. Removed the rechecking of hints everytime a
+			 window was tiled. Now only checks on
+			 PropertyNotify events.
+
+5.7b10 - Sep 4, 2000: 1. Added sample.xsession showing one way to use
+			 a background program feeding the named pipe
+			 without leaving it running after logging out.
+
+5.8 - Sep 5, 2000:    1. Changed version to 5.8 and updated docs here
+			 and there.
+		      2. Changed the status bar maximum message length
+		         to 132 characters.
+
+5.9b - Sep 6, 2000:   1. Started to use CVS. Will now release betas
+			 by doing a cvs export whenever I think there
+			 is enough new stuff for you to test.
+			 The version as reported by larswm -v will just
+			 say 5.9b until 6.0 is released, but the source
+			 tarball will have date and time in the name.
+		      2. Cleaned up menus. Now there is only two,
+		         the main menu on Button3, and the list
+			 of hidden windows on Button2.
+		      3. Tweaked the way skip_focus works together
+		         with Control+Button1 clicks.
+        		 If skip_focus is off:
+                		 Button1=Focus+Retile
+                		 Control+Button1=Focus
+        		 If skip_focus is on:
+                		 if tile_resize is on:
+                        		 Button1=Focus
+                        		 Control+Button1=Focus+Retile
+                		 if tile_resize is off:
+                        		 Button1=Focus+Retile
+                        		 Control+Button1=Focus
+			 This should mostly "do the right thing".
+		      4. Raise/Lower is now Alt+Button1.
+		      5. Added show_class on/off to main menu. If on,
+		         it will show (class~instance) of the focused
+			 window on the status bar.
+		      6. Some more simplification in the prefs loading
+		         code. No change in file format though.
+		      7. Lots of tweaking of the focus code.
+		         Improvement in previous/next window shortcuts.
+		         Now can move focus around without rearranging
+			 windows on a skip_focus desktop.
+			 Also, you should always find a virtual desktop
+			 exactly the way you left it when you go back
+			 to it after using another desktop.
+		      8. Cleaned up sample.barinfo a bit. Added some
+		         more options. See comments in the script for
+			 info on how to set it up.
+		      9. General code cleanup, little details here
+		         and there.
+BETA_5_9_3
+		     10. Fixed a small bug where shift-control-up would
+		         not work right after switching desktop.
+BETA_5_9_4
+		     11. Put the status bar coloring back the way it was
+		     	 so that default is black on white text with
+			 black border.
+		     12. When opening a new centered window, and when
+		         using keyboard shortcuts to move a window to
+			 the north, center or south, make sure that not
+			 only the top of the window but also the left
+			 edge is always visible.
+		     13. New option larswm.*.*.clickthru. When this
+		         is True, clicks used to focus a window are
+			 also passed on to the client in some cases.
+			 If clickthru is on, the click will be passed
+			 in these circumstances:
+			 Tiled subdesktop:
+				when skip_focus is on.
+				and no modifier was used.
+			 Untiled subdesktop:
+				when lazy_notile is off.
+			 Clicks will NOT be passed through if the click
+			 forced a change between the tiled/untiled
+			 subdesktop, or if either force-focus (Shift) or
+			 toggle-retile-after-focus (Control) was used.
+			 Button2 and Button3, which normally open menus,
+			 will be passed through, but only on the untiled
+			 subdesktop, otherwise, you'd have to hunt for
+			 those little slivers of root window that shows
+			 between tiled windows to use the menus.
+		     14. Once again the mode flag field has been updated
+		     	 to show the new mode, it is now:
+			 <TCRSLAH>
+			 Tiled subdesktop
+			 clickthru
+			 tile_resize
+			 skip_focus
+			 lazy_notile
+			 autoraise_notile
+			 Hidden Windows
+			 	Letter means on, '-' means off.
+BETA_5_9_5
+		     15. Hidden window list moved from Button2 to
+		     	 Shift-Control-Button3.
+			 This means if you have clickthru on, you can
+			 use Button2 to paste without first selecting
+			 the window. Like for Button1, if the window
+			 you click on is on a different subdesktop then
+			 the currently active, the click will not be
+			 forwarded.
+BETA_5_9_6
+BETA_5_9_7
+		     16. Made skip_focus be on by default.
+		         If tile_resize is false, windows will move
+			 around anyway, unless Control-Button1 is used
+			 to select them.
+			 After much testing I have found this to be the
+		     	 most efficient setting for me. To get the old
+			 retiling on focus change by default, just put
+			 larswm.*.*.skip_focus: False in the config.
+		     17. Fixed a bug where if you used the keyboard
+		         to move to previous or next window on a
+			 skip_focus:on with tile_resize:off desktop,
+			 the windows would not rearrange themselves.
+		     18. Got rid of stderr message when the named pipe
+		         cannot be found. If it is not there, assume
+			 the user doesn't want this feature enabled.
+BETA_5_9_8
+		     19. Better reverting to previously focused window.
+		         Now does the right thing when for instance
+			 running ghostscript from a tiled terminal, that
+			 is, focus stays with the terminal window that
+			 was used to start it.
+BETA_5_9_9
+		     20. When clickthru is on, always pass clicks on to
+		         tool windows regardless of which subdesktop
+			 is active.
+		     21. Tool window mapping/unmapping forces retiling.
+		     22. Clickthru on a tile_resize:False desktop now
+		         works if the clicked window was already in the
+			 left track and no visible retiling occured.
+		     23. More tweaks to focus handling when a window
+		         is unmapped.
+		     24. Using any of the zoom keyboard shortcuts on
+		     	 a tiled window will do one of two things:
+			 If the window is not in the left track,
+			 	put it there.
+			 If the window is in the left track,
+			 	swap it with the top right track window.
+BETA_5_9_11
+		     25. Fixed a bug when using the zoom key to swap
+		     	 the current with the previous left track window.
+BETA_5_9_12
+		     26. Fixed a bug that prevented autoraise_notile
+		     	 prefs from being seen.
+BETA_5_9_13
+BETA_5_9_14
+		     27. Got rid of lazy_notile and autoraise_notile
+		     	 since the reason they were created no longer
+			 exists, and that mode did not integrate well
+			 with the rest of larswm.
+			 (clickthru gets rid of the need to click twice
+			  on windows when you are working with more
+			  than one at a time.)
+		     28. On a single screen display, do not grab the
+		    	 keyboard combination for prev and next screen.
+		     29. When unhiding a window, don't lose track of
+		         focus if the newly mapped window did not want
+			 input focus.
+		     30. Alt-Button3 will now lower a window if that
+		         window belongs to the currently active
+			 subdesktop, otherwise it will be raised.
+		     31. Compiles without any warnings with
+		     	 gcc -Wall -ansi -pedantic.
+BETA_5_9_15
+		     32. Fix prev/next screen key bug.
+BETA_5_9_16
+		     33. Fix small bug introduced in BETA_5_9_15 that
+		         didn't redraw the window borders correctly
+			 in all cases.
+BETA_5_9_17
+		     34. Got rid of the alarm() stuff. Now, instead of
+		     	 checking the named pipe every second for
+			 updates, it will only check if it receives
+			 an XClientMessageEvent on an atom named
+			 "LARSWM_MESSAGE". One way to send that message
+			 is to run larswm with the 'message' command
+			 line argument. So, to use the status bar
+			 message facility, write the data to the pipe
+			 and then run 'larswm message'.
+			 	#!/bin/sh
+				#  helloworld example
+				echo "Hello World" > $HOME/.larswmfifo
+				larswm message
+				exit 0
+			 It's my hope that getting rid of the signal
+			 stuff will make it a bit more stable, and it
+			 also makes sense that the supplier of the data
+			 decides the rate at which it should be fetched.
+		     35. Added the flushmessage command line option
+		         which tells the running larswm to read and
+			 throw away everything in the pipe. It's a good
+			 idea to use this before writing to the pipe
+			 to make sure the message you are about to
+			 write to the pipe will be seen right away.
+			 sample.barinfo have been updated to use this
+			 new message facility.
+			 In the helloworld example above, you would
+			 insert the line 'larswm flushmessage'
+			 before the line containing the echo command.
+BETA_5_9_18
+		     36. Fix a bug where focus would not be set to the
+		     	 left track on tile_resize:false desktops.
+BETA_5_9_19
+		     37. Excerpt from IRC:
+		         <dabugas> my recommendation as le grande artiste
+		         <dabugas> is to use [ instead of <
+			 Let it be known that I have now done this years'
+			 change of larswm purely for looks. :)
+BETA_5_9_20
+		     38. Got rid of Alt+Button3 for Raise/Lower. If a
+		     	 window is in the way, it makes more sense to
+			 use the keyboard shortcut to hide it, do stuff
+			 to whatever was underneath, and then use the
+			 keyboard shortcut to unhide the last hidden
+			 window.
+		     39. Shift+Button3 now shows the list of hidden
+		         windows if there are any.
+		     40. NO mouse grabs are done on the focused window.
+		     	 This means all modifier combinations on clicks
+			 are available to the application.
+BETA_5_9_21
+		     41. Minor focus tweaks. prev/next_window on the
+		    	 untiled subdesktop was sometimes confused.
+BETA_5_9_22
+		     42. Added keyboard shortcuts for resizing windows
+		         on the untiled subdesktop.
+			 The default keys are:
+			 Shift-Control-Alt-KP_Up	Grow vertical
+			 Shift-Control-Alt-KP_Down	Shrink vertical
+			 Shift-Control-Alt-KP_Right	Grow horizontal
+			 Shift-Control-Alt-KP_Left	Shrink horizontal
+			 Shift-Control-Alt-KP_Home	Grow both ways
+			 Shift-Control-Alt-KP_Up	Shrink both ways
+			 It will not let any part of the window end up
+			 outside the visible screen area, and it will
+			 honor all hints, including minimum size.
+REL_6_0_0_PRE_1
+		     43. Put a delimiter between restart and exit to
+		     	 avoid accidents. =)
+REL_6_0_0_PRE_2
+		     44. Do allow Button3 clicks on inactive windows
+		         to be sent to the client if the window is
+			 an untiled window and the untiled desktop is
+			 active. Basically, to use the menu you need
+			 to Button3 click in one of the following
+			 locations:
+			 	1. The root window
+				2. Any inactive tiled window.
+				3. An inactive window that is not a tool
+				and that is on a different subdesktop
+				than what is currently active.
+REL_6_0_0_PRE_3
+
+6.0 - Sep 11, 2000:   1. Change version to 6.0 stable. Update docs.
+REL_6_0_0
+
+6.0.1 - Sep 13, 2000: 1. Fix a bug in status bar messaging that would
+			 coredump if a message containing just a newline
+			 was in the pipe when updating the bar.
+			 This changes slightly how the message is
+			 displayed, no editing is done by larswm,
+			 so it is the responsibility of the data source
+			 to strip out newlines and other non-printable
+			 characters. Also, if there is no message in
+			 the pipe, the status bar message will be
+			 cleared instead of showing the old message when
+			 'larswm message' is run.
+		      2. In sample.barinfo, remove dependency on wget
+		     	 for the BSDs.
+REL_6_0_1
+
+6.0.2 - Sep 13, 2000: 1. Restore the functionality that moves focus
+			 between screens when the mouse is moved into
+			 a different screen. Implemented slightly
+			 different than before, mouse pointer does
+			 not have to enter a client window, entering
+			 the screen is enough.
+		      2. Fixed a real small bug in the layout of tiled
+		         windows. One pixel was wasted between status
+			 bar and the windows. =)
+REL_6_0_2
+
+6.0.3 - Sep 16, 2000: 1. Fix the bug that would make the root window
+			 get the same background color as the menu
+			 in some instances when right clicking and
+			 releasing quickly.
+			 Thanks to Michael Lothian for finding a
+			 solution to this problem.
+		      2. Added the larswm.show_class option which
+		      	 lets you turn on showing the window class
+			 on the status bar on startup.
+		      3. Added the larswm.floatclass.# option which
+		      	 lets you specify certain windows you always
+			 want floating above the other tiled and
+			 untiled windows. Like tools, mouse clicks are
+			 passed on to these windows if clickthru is
+			 on regardless of which subdesktop is active.
+REL_6_0_3
+
+6.0.4 - Sep 16, 2000: 1. Got rid of larswm.default_notile option.
+			 Now always on, that is, no window is tiled
+			 unless a larswm.dotileclass.# line exists
+			 for its class/instance.
+REL_6_0_4
+
+6.1b - Sep 21, 2000:  1. Got rid of larswm.bar option. Status bar is
+			 now always visible, as it has other functions
+			 not available without it.
+		      2. Added larswm.toggle_inc_key and mod shortcut.
+			 This lets you toggle whether move/resize keys
+			 does 5% of screen size or 1 pixel (or if hints
+			 are specified, the smallest possible change.)
+			 When resizing, it actually resizes 2 pixels
+			 instead of 1, to make the window stay where
+			 it is.
+		      3. A 'B' in the mode flags on the status bar means
+			 the 5% change is in effect.
+		      4. When show_class is on, show class info about
+			 the focused window after the class/instance
+			 name in a separate mode flag field.
+			 [nftsi]
+			 n = notile, f = floating, t = tool, s = sticky
+			 and i = takes input.
+		      5. Cleaned up menu code, but did not remove it.
+			 Moved hidden windows back to where 9wm keeps
+			 them, that is at the end of the main menu.
+			 The menu is now exactly 9wm standard.
+		      6. Added many mouse commands to the status bar,
+			 they are now:
+			 No modifier
+				Button1		Previous desktop
+				Button2		Toggle tiled/untiled
+				Button3		Next desktop
+				Button4		Previous desktop
+				Button5		Next desktop
+			 Shift
+				Button1		Toggle clickthru
+				Button2		Toggle tile_resize
+				Button3		Toggle skip_focus
+				Button4		Previous window
+				Button5		Next window
+			 Control
+				Button1		Toggle show_class
+				Button2		Toggle focused isnotile
+				Button3		New Terminal
+			 Shift+Control
+				Button1		Toggle focused isfloat
+				Button2		Toggle focused istool
+				Button3		Toggle focused issticky
+			 The mouse wheel functions also works when
+			 the pointer is on the root window or above
+			 an unfocused window.
+		      7. Removed the larswm.show_class option as it is
+			 now very quick and easy to turn that feature
+			 on by control-button1 clicking the status bar.
+BETA_6_1_0
+		      8. Removed grab.c! Removed menu code!
+		      9. The way to find and unhide hidden windows are
+			 as follows.
+			 On the status bar, these new mouse clicks:
+			 Alt-Button1	Show previous hidden window
+			 Alt-Button2	Unhide currently shown window
+			 Alt-Button3	Show next hidden window
+			 Alt-Button4	Show previous hidden window
+			 Alt-Button5	Show next hidden window
+			 The mouse wheel functions also work on the
+			 root window and any unfocused window.
+			 When a hidden window label is shown instead
+			 of the currently focused window's label, it
+			 looks like this:
+			 Hidden (xterm)
+			 And if the window is on a different screen
+			 than the status bar you are looking at:
+			 Other (xterm)
+			 If no hidden window is shown when Alt-Button2
+			 is pressed, the currently focused window will
+			 be hidden.
+BETA_6_1_1
+
+		     10. Get rid of debug printf in buttons.c.
+BETA_6_1_2
+
+		     11. Dont show focused window's class info while
+			 browsing hidden window labels.
+BETA_6_1_3
+		     12. Added the larswm.selection.# option. Use this
+			 in conjunction with application shortcuts to
+			 define applications that will have the current
+			 selection inserted into the command line where
+			 the first '%s' occurs before executing.
+			 Here is an example:
+			 	larswm.application.0: xterm -e man %s
+			 	larswm.selection.0: True
+			 	larswm.application_key.0: m
+			 	larswm.application_mod.0: Shift+Control
+			 With that, you can highlight text and when
+			 using the hotkey, an xterm with a manual page
+			 about whatever word you highlighted will open.
+			 See sample.larswm for more examples.
+BETA_6_1_4
+
+		     13. Changed the way the selection is passed to apps.
+			 When the app is launched, the following variables
+			 will be set:
+			 LARSWM_SELID=window id of selection owner
+			 LARSWM_SELNAME=title of selection owner
+			 LARSWM_FOCUSID=window id of focused window
+			 LARSWM_FOCUSNAME=title of focused window
+			 LARSWM_SELTEXT=highlighted text.
+			 	Up to 1024 characters of the selection.
+			 The reason for both selection owner and focused
+			 window is that when you want to get the title
+			 of a window, the title is almost never set on
+			 the same window as selection owner is reported
+			 as. See sample.larswm for an example of how to
+			 set up various application hotkeys using these
+			 variables.
+		     14. Got rid of the larswm.selection option, the
+			 environment varible is always set if text
+			 exists.
+		     15. Added the file sample.editor which shows how you
+			 can use the variables to pass current working dir
+			 of a terminal window to the launched app.
+BETA_6_1_5
+
+		     16. Fix a portability problem with putenv.
+BETA_6_1_6
+
+		     17. Set focused window id/name variables even if
+			 nothing is selected.
+		     18. Variables are no longer set to the empty string
+			 but left unset if that particular bit on info
+			 is not available (most often LARSWM_SELNAME).
+BETA_6_1_7
+
+		     19. Updated sample.editor to be a bit smarter.
+BETA_6_1_8
+
+		     20. Added mouse move and resize. You initiate a
+			 window move by Shift-Alt-Button1 clicking
+			 the status bar. This warps the pointer to the
+			 top left corner of the currently focused
+			 window, and the window will be dragged until
+			 you release Button1.
+			 To resize, Shift-Control-Alt-Button1 click the
+			 status bar. This warps the cursor to the lower
+			 right corner of the window, and that corner
+			 will be dragged until you release Button1.
+			 Please note that the display will be grabbed
+			 during window/corner dragging and no content
+			 will be updated. This prevents a flood of
+			 expose events to the clients while you are
+			 manipulating the window.
+BETA_6_1_9
+		     21. Added display of geometry on the status bar
+			 while moving and resizing with the mouse.
+BETA_6_1_10
+
+		     22. When starting to move or resize a window with
+			 the mouse, make sure that window is on top.
+BETA_6_1_11
+
+		     23. To limit the number of key combinations, the
+			 keys for resizing the left track has been
+			 removed. Instead use the same keys that you
+			 use for resizing a window on the untiled
+			 desktop:
+			 Shift-Control-Alt-KP_Right	Grow
+			 Shift-Control-Alt-KP_Left	Shrink
+			 Shift-Control-Alt-KP_Up	Maximize
+			 Shift-Control-Alt-KP_Down	Restore
+			 This functionality is available when the
+			 tiled subdesktop is active, when the untiled
+			 subdesktop is active, these keys resize the
+			 focused window like before.
+BETA_6_1_12
+
+		     24. Update docs. Up version to pre-release status.
+REL_6_2_0_PRE_1
+
+		     25. All shell variables that are set when launching
+			 an app have been renamed to just WM_something.
+		     26. Added the WM_SELICONNAME and WM_FOCUSICONNAME
+			 which contains the icon title property of the
+			 windows.
+			 The complete list is now:
+			 WM_SELTEXT=highlighted text.
+			 WM_SELID=window id of selection owner
+			 WM_SELNAME=window title of selection owner
+			 WM_SELICONNAME=icon title of selection owner
+			 WM_FOCUSID=window id of focused window
+			 WM_FOCUSNAME=window title of focused window
+			 WM_FOCUSICONNAME=icon title of focused window
+		     27. Changed the way text messages are sent to
+			 be displayed on the status bar. Now communicates
+			 entirely through the X server.
+		     28. Removed the flushmessage command line option.
+		     29. Changed how 'larswm message' works. Now takes
+			 the text to be displayed as an argument, if
+			 no argument is included, clear the status bar.
+			 larswm message "Hello World"
+REL_6_2_0_PRE_2
+
+		    30. Forgot to update sample.barinfo, now uses the
+			new message facility.
+REL_6_2_0_PRE_3
+
+7.0 - 9/25/2000:     1. Upped version to 7.0 as this contains quite
+			a few changes that makes it incompatible with
+			previous config files etc.
+REL_7_0_0
+
+		     2. Fixed two memory leaks.
+REL_7_0_1
+
+		     3. Fixed a big where WM_NAME shell variables
+			would not be set.
+REL_7_0_2
+
+		     4. Removed server grabbing when moving and resizing
+			windows with the mouse.
+REL_7_0_3
+
+		     5. Simplified message sending. Each "larswm message"
+			run involves fewer function calls in the running
+			larswm.
+REL_7_0_4
+
+		     6. When using the mouse to move or resize, after
+			manipulating the window, restore the mouse
+			pointer back to where it was when the command
+			was initiated.
+		     7. Added the option larswm.button#.application,
+			This will run a command when the mouse is
+			clicked outside any window.
+			Since it can be hard to aim at the visible
+			areas of the root window when the screen is
+			full of tiled windows, the window borders can
+			also be used for this purpose, making it easy
+			since all you have to do is move the mouse
+			against the left, right or top edge of the
+			screen before clicking.
+			Example:
+				larswm.button3.application: xterm
+			will launch en xterm when right-clicking
+			the desktop. The same environment variables
+			are set as for keyboard shortcuts, letting you
+			define mouse commands that behave differently
+			depending on what you are doing.
+		     8. Fixed a bug where focus would move when going
+			to another virtual desktop and back again.
+		     9. Added sample.barclock, which is just the
+			date/time display portion of sample.barinfo.
+		    10. Alt-Button1, 2 and 3 on the status bar used
+			for finding and unhiding/hiding windows also
+			works on the root window.
+REL_7_0_5
+
+		    11. Oops. Forgot to add sample.barclock to the
+			RPM spec file.
+		    12. Got rid of larswm.terminal option, use
+			keyboard shortcuts and/or mouse button apps
+			to emulate the old behaviour.
+		    13. The key Shift+Control+Return is no longer
+			defined by default.
+		    14. Control-Button3 on the status bar zooms/unzooms
+			the focused window.
+REL_7_0_6
+
+		    15. Fix a small typo in the -defaults output.
+		    16. Add a reference card for the resources,
+			larswmrc_refcard.ms, which is a troff/tbl
+			document like the other reference cards.
+		    17. Fix border clicking so that it works on
+			inactive borders as well. Now you really
+			can put the mouse against an edge and click
+			to execute mouse applications.
+REL_7_0_7
+
+		    18. Fix the problem where sometimes clicks would
+			work as if they were on the root window or
+			the border even if they were inside the window.
+			This problem only showed up with clients who
+			did not select mouse clicks on all of the
+			window, and left some areas exposed to clicks
+			that it wasn't interested in receiving.
+			An example is Xcalc, between the buttons.
+REL_7_0_8
+
+		    19. Removed some old code dealing with FocusIn
+			events that could cause a core dump in some
+			rare circumstances.
+		    20. No longer sets a cursor. To get the old cursor
+			back, use:
+				xsetroot -cursor_name top_left_arrow
+			in your .xsession or other login file.
+			The special move and resize cursor are still
+			set when those operations are performed.
+		    21. Minor tweak to status bar. Saves 2 pixels in
+			both dimensions by droping the border.
+		    22. Fix a minor visual bug where windows sometimes
+			would not line up properly with the status bar
+			when different border widths and tile padding
+			was chosen.
+REL_7_0_9
+
+		    23. Removed all the different mouse combinations
+			on the status bar.
+		    24. Added a menu for the status bar, that works
+			the same way that you find and unhide windows.
+			Use Control + mouse buttons on the status bar
+			to access the menu.
+		    25. Got rid of larswm.border and larswm.tile_pad
+			options. If you don't want 2 pixel borders
+			and 1 pixel padding, edit dat.h (Look for
+			BORDER and TILE_PAD at the top of the file.)
+		    26. Got rid of larswm.sticky_notile option.
+		    27. Made tools be floating by default.
+REL_7_0_10
+
+		    28. Fixed a focus bug that was most noticable in
+			Netscape, where sometimes you could click in
+			a text field to select it, but no keystrokes
+			would make it there.
+REL_7_0_11
+
+		    29. Added the larsremote program, which contains
+			only the code needed to send messages to
+			larswm. It can send exit, restart and status
+			bar message events.
+		    30. The exit, restart and message command line
+			arguments are no longer supported by the main
+			larswm program, use larsremote.
+		    31. Added the larsclock program, which is a
+			clock app that keeps the status bar updated
+			without launching an external program to
+			send the message to larswm.
+REL_7_0_12
+
+		    32. Removed a call to abort() in client.c, this
+			was the only reported crash since 7.0.12, and
+			I don't think anything will break by just
+			having it silently ignore that particular
+			error condition.
+		    33. Made it possible to define keyboard shortcuts
+			with no modifiers. Specify 'None' as modifier.
+		    34. Fixed an omission, larsremote now correctly
+			sets an exit status of 0 if it ran without
+			problems.
+REL_7_0_13	Dec 1, 2000.
+
+                    35. Fixed a memory leak in larsclock.
+                    36. Removed checking for input hint. Many
+                        programs set this incorrectly, and I have yet
+                        to see anything break by giving input focus
+                        to a window that didn't ask for it.
+                        This also means force focus (shift-click)
+                        is gone.
+                    37. Fixed sample.editor to work with RH72 default
+                        prompt format.
+REL_7_0_14	May 2, 2002.
+
+                    38. Fixed a bug where, depending on what modifiers
+                        were used, keystrokes would just get eaten
+                        by larswm and not passed down to the appplication.
+REL_7_0_15	Jun 7, 2002.
+
+                    39. Added another way to zoom non-tiled windows.
+			By default Shift-Control-space zooms a window
+			so it uses 90% of the screen height and 60% of
+			the width and centers it. In larswmrc, edit:
+				larswm.move_select_key: space
+				larswm.move_select_mod: Shift+Control
+			to chose keyboard command.
+			Also, Control-Button1 on an inactive untiled
+			window gives it focus and select zooms it in
+			this way.
+			Shift-Control-Button2 in status bar is another
+			way to toggle select zoom on a window.
+			Note that when zooming a window, if another
+			widow is already zoomed, it will be unzoomed.
+                    40. With mouse pointer on status bar, if holding
+			down Shift while rolling the mouse wheel
+			you will go to prev/next window on current
+			desktop. Shift-Control and wheel will shrink
+			and grow current window. Shift-Control and
+			Button1/Button3 also shrinks/grows.
+			Control-Shift-Alt and wheel will move window
+			vertically, while Shift-Alt and wheel moves
+			it horizontally.
+REL_7_0_16      Jun 28, 2002.
+
+                    41. Fixed a small bug in the focus handling when
+			using the select zoom feature mentioned in
+			entry #39 above.
+		    42. Removed a couple of obsolete doc files.
+		    43. If a .larswmrc cannot be found in the home
+			directory, or where the user specified
+			with -f then a system wide file is looked
+			for. By default /etc/X11/larswmrc is loaded.
+REL_7_0_18	Jul 1, 2002.
+
+		    44. When using the keyboard or mouse to go to the
+			previous or next window on the untiled desktop,
+			if the current window is select zoomed, the
+			next/previous window is select zoomed too.
+			Also, if a window is zoomed the normal way
+			and you try to select zoom it, it is first
+			unzoomed.
+			To recap: Only one window can be select zoomed
+				    at any given time.
+				  More than one window can be zoomed
+				    vertically, horizontally or both
+				    (maximized) at a time.
+                                  A window can only have one type of
+				    zoom active at any given time.
+			I believe these rules will make for less
+			confusion on the long run.
+		    45. When unhiding a window, properly set the active
+			subdesktop to whichever the unhid window belongs
+			to
+REL_7_0_19	Jul 6, 2002.
+
+		    46. Simplified zoom select to not be too automatic,
+			it is the untiled subdesktop after all. You can
+			have more than one window zoomed in the middle.
+			When you go to next and previous windows using
+			the keyboard or mouse the newly focused windows
+			are not automatically zoomed. Also making sure
+			that a window that has one kind of zoom applied
+			is first unzoomed when another tpe of zoom is
+			requested. Also made this kind of zoom use the
+			full height of the screen and adjust width so
+			the ratio is the same as for a US letter sized
+			paper (11x8.5).
+REL_7_1_0	Jul 10, 2002.
+
+		    47. Only one very small change in this patch, when
+			resizing a window using the mouse wheel, rolling
+                        up will grow the window and rolling down will
+			shrink it.
+REL_7_1p1	Jul 18, 2002.
+
+		    48. raise_notile_key and raise_notile_mod were omitted
+			from "larswm -defaults", this has been fixed.
+			Also, version numbering back to old standard.
+REL_7_1_2	Jul 21, 2002.
+
+		    49. Added keyboard shortcut for moving a window between
+			the tiled and untiled subdesktop. As a result,
+			removed that functionality from the control menu.
+			Default key binding is Shift+Control+space
+			When a window is changed from being tiled to
+			untiled, it is sized to 1/2 screen height and
+			width and centered on the screen.
+REL_7_1_3	Aug 22, 2002.
+
+		    50.	By Florian Forster <octopus@verplant.org>
+			Partial rewrite of the tiling code. The behavior
+			stays the same, but a PResizeInc-hint does no
+			longer result in (ugly?) gaps between windows
+			and/or tracks, ConfigureNotifies are sent at more
+			appropriate times and a simple debug-message
+			system has been implemented.
+			(Thank you Florian, this looks much nicer! /Lars)
+REL_7_1_4  	Aug 23, 2002.
+
+		    51. Added the option to compile it with 3D borders.
+			This is on by default, edit Imakefile to turn off.
+			The reason it is not a runtime option is, some
+			people might not want all that extra code that does
+			nothing except make it look pretty linked into
+			their binaries. With this, if you do not specify
+			colors in your .larswmrc, you get my default
+			color scheme, yellow on slategray.
+BETA_7_2_0      Sep 10, 2002.
+
+		    52. Fixed a redrawing problem. When moving or resizing
+			with the mouse, the 3D borders would get smudged.
+		    53. Bug when xterms will open up thinking they are
+			80x24 even though they've been tiled to other sizes
+			is still there. Help wanted to find this. :)
+BETA_7_2_1      Sep 10, 2002.
+
+                    54. Some code cleanup, removed unnecessary calls to
+			sendconfig().
+		    55. Window gravity should now be accurate.
+                    56. Released with known xterm size problem.
+			Workaround documented in README and manpage.
+			In short, put this line in your .cshrc or .bashrc:
+				eval `resize`
+		    57. Incorporated the users manual into the main larswm
+			manpage.
+REL_7_2_2       Sep 11, 2002.
+
+                    58. Oops! Cleaned out a bit too much. Put some sendconfig
+			calls back. Now drop down menus and stuff like that
+			shouldn't appear in the wrong location after a window
+			has been moved by larswm.
+REL_7_2_3       Sep 12, 2002.
+
+                    59. To switch virtual desktop with the mouse wheel,
+			the pointer needs to be on the status bar. Also,
+			when rolling the wheel above an inactive window,
+			that window will be made active and receive the
+			Button4/Button5 events. This should prevent the
+			annoying behaviour when you flip through desktops
+			with the wheel, only to have it get stuck on a
+			window that happen to be under the mouse pointer
+			after you switch desktop, and also be consistent
+			with how the normal 3 mouse buttons work.
+		    60. Small tweak to how default colors are handled when
+			compiled with THREE_D on.
+		    61. Always show Class~Instance and window flags on
+			status bar.
+		    62. When a window is moved from the tiled to the untiled
+			subdesktop, the hints are checked for its default
+			size and location.
+REL_7_2_4       Sep 27, 2002.
+
+		    63. Item 62 rolled back. Too many clients do not set
+			proper hints.
+REL_7_2_5       Sep 28, 2002.
+
+		    64. Small fix to virtual desktop switching. Should work
+			with transparent aterm windows now.
+REL_7_2_6       Sep 29, 2002.
+
+		    65.	By Florian Forster <octopus@verplant.org>
+			A window's title which is too long for larswm's bar
+			is now chopped appropriate.
+		    66. Fixed a long standing bug where the root window would
+			be repainted with larswm's current background color
+			when some GTK applications were closed.
+		    67. Fixed another long standing bug where new apps could
+			not be launched after certain GTK apps had been
+			running for awhile, most notably Galeon.
+REL_7_2_7	Oct 26, 2002.
+
+		    68. Fix #67 did not work. Removing all that selection
+			stuff for now. This means the special shell
+			variables (WM_SELTEXT etc) are no longer set.
+REL_7_2_8	Oct 26, 2002.
+
+		    69. Changed the default session file to run ssh-agent if
+			it is available.
+			RPM version upped to 7.2.8-2, no change to source
+			file version.
+REL_7_2_8	Oct 31, 2002.
+
+		    70. Changes to default config files to update them for
+			RedHat 9. (Using Mozilla instead of Galeon etc)
+		    71. Removed some unused code.
+		    72. When specifying Class~Instance, if you do not
+			include both (using the tilde), your string is
+			compared both to class and instance of the client.
+REL_7_2_9	Apr 3, 2003.
+
+		    73. Applied patch from debian bug database that
+			adds a -format option to larsclock. Changed
+			the default format to be 12 hour clock.
+		    74. Applied patch from Edelhard Becker to fix
+			focus problem with GTK2 applications.
+REL_7_2_10	Apr 28, 2003.
+
+		    75. Added the concept of setting aside windows
+			using a keyboard shortcut.
+		    76. Added the 'z' indicator to the status bar.
+			On when a window is in a zoomed state.
+		    77. Some tweaking to window/status bar layering.
+			Should work a tad better with windows that
+			are bigger than the area above the status bar.
+REL_7_3_0	Apr 3, 2004.
+
+		    78.	Swapped the meaning of wheel up and down when
+			resizing windows. Think of it as moving the
+			window closer to your eyes when rolling the
+			wheel towards you.
+		    79.	Added mouse combos for setting windows aside.
+			Hold Control-Alt and click status bar to do
+			the following:
+				button1 = put back next window
+				button2 = put aside or put back
+				button3 = put aside current window
+				button4 = button1
+				button5 = button3
+		    80.	Fixed window stacking. When using
+			Control-button1 to select a window, never
+			change stacking if selecting a window on
+			the inactive subdesktop. For ghostscript
+			without frontend and similar situations.
+REL_7_3_1	Apr 5, 2004.
+
+		    81.	Fixed 3D borders. Now uses 0 width lines for
+			the effect. The result is a slightly cleaner
+			look and possibly faster drawing on some
+			X servers.
+REL_7_3_2	Apr 15, 2004.
+
+		    81.	Fixed crashing bug when using Shift-wheel-up
+			on the status bar of an empty virtual desktop.
+REL_7_3_3	Apr 30, 2004.
+
+		    82. Added one more way to zoom a window, similar
+			to the Shift-Alt-KP_Begin used to maximize
+			a window both ways.
+			Using Shift-Control-Alt-KP_Begin will make
+			the window as close to the exact size of the
+			display as possible while still following
+			the size hints.
+REL_7_3_4	May 5, 2004.
+
+		    83. Made windows that are set aside be stacked
+			along the right edge the same way tiled
+			windows are in the right track when resize
+			is off.
+		    84. Very minor fix to mouse resizing, making the
+			window corner follow the mouse pointer better.
+		    85. Tweaked how windows are sized when moved
+			from tiled to untiled subdesktop. Now uses
+			size hints if appropriate.
+REL_7_3_5	May 7, 2004.
+
+		    86. Applied Tommy Pettersons sticky-space-per-desktop
+		    	patch, as found in the 7.3.5 Debian package.
+REL_7_3_6	May 15, 2004.
+
+		    87. Applied a couple of Mikolaj Golub's patches.
+		    	Fix for crashing bug when using xxkb.
+			Small tweak that lets you cycle through windows
+			in the right track the same way whether
+			tile_resize is on or off.
+REL_7_3_7	May 16, 2004.
+
+		    88.	Restored the zoom_full_ entries to prefs.c.
+		    89. Updated email address and website info with
+		    	new permanent addresses. Thanks to dyndns.org
+			they should stay permanent from now on.
+			Please update in your packages if you provide
+			larswm binaries of any kind.
+REL_7_3_8	May 20, 2004.
+
+		    90. Added a way to quickly move a window to a
+		    	different virtual desktop. It is not exactly
+			like Mikolaj Golub's patch set, but a variant
+			of it. If you use Shift-Alt with Left or Right
+			arrow keys, you switch desktop while dragging
+			the focused window with you to the new desktop.
+REL_7_3_9	May 25, 2004.
+
+		    91. Removed the special handling of transient
+		    	windows. They are now just forced to the
+			untiled subdesktop. This should make it
+			easier to deal with things like Mozilla
+			download windows.
+		    92. Ran all source code through GNU Indent.
+		    93. Cleaned up manual pages, README etc.
+		    	removing most of the information, since it will
+			be part of the new User Guide instead.
+		    94. Added Arnold Robbins' 9menu-1.7 to the dist.
+		    	Renamed it to not cause conflicts when
+			installing both larswm and 9menu, and
+			to comply with the 9menu license when
+			modifying the code. The menu items were
+			made much larger so as to require less
+			mouse precision. Only one menu will
+			be allowed on each display at a time.
+			Also updated sample.larswmrc to use the menu.
+		    95. Cleaned up gravity code again. It is verified
+		    	to work correctly with xterm, xcalc, xlogo,
+			xedit and a few other standard X programs.
+			It may leave windows slightly off or in
+			from screen edges with clients that do not
+			set geometry hints properly.
+REL_7_4_0	May 30, 2004.
+
+		    96. Ignore mouse wheel in menu.
+		    97. Updated the manual pages.
+REL_7_4_1	May 30, 2004.
+
+		    98. When using the menu, Escape closes it.
+		   **** Thanks to Florian Forster for 99-101. :)
+		    99. Cleaned up some inconsistensies in the
+		    	status bar menu.
+		   100. Removed the automatic association between
+		   	tile_resize and skip_focus. sample.larswmrc
+			has been updated to reflect this. Basically
+			you need to have both tile_resize: False
+			and skip_focus: False to get the old
+			behaviour.
+		   101. Fixed a small bug with window focus when
+		   	using sticky windows on the tiled subdesktop.
+REL_7_4_2	May 31, 2004.
+
+		   102. Fixed the XMULIB reference in the Imakefile.
+		   103. Restored manual page. Who knows when I'll have
+			tiem to finish the new manual. :/
+REL_7_4_3	Jun 01, 2004.
+
+		   104. Made the menu window sticky in the default config
+			so you don't have to search for it if you try to
+			open more than one menu.
+REL_7_4_4	Jun 01, 2004.
+
+		   105. Fixed RPM spec session file name.
+REL_7_4_5	Jun 02, 2004.
+
+		   106. Updated manual page. Incorporated keyboard
+			and mouse tables.
+		   107. Removed RPM spec file from source dist.
+			This will make it easier to provide RPMS
+			for other distros, and remove the need for
+			a new source dist when the RPM build changes.
+			SRPM files will be made available instead.
+REL_7_4_6	Jun 02, 2004.
+
+		   108. Final (I hope!) cleanup of the focus code when
+			using Control-Button1 to change the default
+			focus rules.
+REL_7_4_7	Jun 03, 2004.
+
+		   109. Repackaged tar file, upped version to not have
+			any checksum confusion.
+REL_7_4_8	Jun 03, 2004.
+
+		   110. Fixed a rare bug where the status bar would not
+		   	get redrawn when changing virtual desktop.
+		   111. Removed a couple of unused functions.
+		   112. Status bar made slightly thinner when using
+		   	3D borders.
+		   113. Changed section of man pages to follow Debian
+		   	standards.
+REL_7_4_9	Jun 16, 2004.
+
+		   114. Added the Shift-Control-0 keyboard command to
+			set aside all untiled windows except the
+			currently focused.
+		   115. Control-Button1 on an aside window will put
+			it back, then put aside all other untiled windows.
+		   116. Fixed a bug where the wrong subdesktop could be
+			active after putting back an aside window.
+		   117. Made the menu slightly wider and shorter.
+		   118. Don't count tool space on a desktop where
+			tile_resize is off.
+		   119. A tool window should never get focus except
+			when manually focused by clicking on it.
+			Note that focus will still be removed from
+			the currently active window when a tool window
+			opens.
+REL_7_5_0	Jun 17, 2004.
+
+		   120. Shaped windows did not resize correctly when
+		   	using the mouse.
+REL_7_5_1	Jun 21, 2004.
+
+		   121. Applied patches supplied by Tommy Petterson.
+		   	Fixes a couple typos, makes larsclock use
+			locale, easier to configure larsmenu padding.
+		   122. Removed some old junk from the Imakefile, and
+		   	cleaned out the tabs that broke BSD make.
+REL_7_5_2	Jun 28, 2004.
+
+		   123. Tweaked how colors for 3D borders are calculated.
+		   124. Fixed menu inconsistency in sample.larswmrc.
+REL_7_5_3	Jul 15, 2004.

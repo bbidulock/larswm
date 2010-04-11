@@ -1,0 +1,40 @@
+.TH larsremote 1x
+.SH NAME
+larsremote \- Command line control for larswm
+.SH SYNOPSIS
+.B larsremote
+[
+.B \-display
+.I dpy
+]
+.B message
+.I text
+.B | exit | restart
+.SH DESCRIPTION
+.I larsremote
+lets you control the larswm window manager from the command line.
+.SH OPTIONS
+The following command line options are supported:
+.TP 18
+.BI \-display " dpy"
+lets you specify which display you want to open.
+.TP 18
+.BI message " text"
+Sends text to the running
+.I larswm
+to be displayed on the status bar.
+.TP 18
+.B exit
+tells the running
+.I larswm
+to exit gracefully.  This is the normal way to log out if your session hangs on the window manager.
+.TP 18
+.B restart
+tells the running
+.I larswm
+to restart.  Use this if you have updated your preferences file and want the new preferences to take effect without first logging out.
+.SH SEE ALSO
+larsclock(1x), larsmenu(1x), larswm(1x)
+.SH AUTHORS
+.I larsremote
+was created by Lars Bernhardsson <lab@fnurt.net>.

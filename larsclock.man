@@ -1,0 +1,32 @@
+.TH larsclock 1x
+.SH NAME
+larsclock \- Status bar clock for larswm
+.SH SYNOPSIS
+.B larsclock
+[
+.B \-display
+.I dpy
+]
+[
+.B \-format
+.I fmt
+]
+.SH DESCRIPTION
+.I larsclock
+is a minimal status bar clock application for the larswm window manager.
+.SH OPTIONS
+The following command line options are supported:
+.TP 18
+.BI \-display " dpy"
+lets you specify which display you want
+.I larsclock
+to open.
+.TP 18
+.BI \-format " fmt"
+lets you format how the time is displayed. The default format is
+"%c". See strftime(3) for details.
+.SH SEE ALSO
+larsmenu(1x), larsremote(1x), larswm(1x), strftime(3x)
+.SH AUTHORS
+.I larsclock
+was created by Lars Bernhardsson <lab@fnurt.net>.

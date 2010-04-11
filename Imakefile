@@ -1,0 +1,20 @@
+CCOPTIONS=-DTHREE_D -DUSE_LOCALE
+
+PROGRAMS = larswm larsremote larsclock larsmenu
+
+SRCS1 = main.c event.c manage.c buttons.c client.c error.c tiling.c prefs.c keys.c mouse.c bar.c
+OBJS1 = main.o event.o manage.o buttons.o client.o error.o tiling.o prefs.o keys.o mouse.o bar.o
+
+SRCS2 = larsremote.c
+OBJS2 = larsremote.o
+
+SRCS3 = larsclock.c
+OBJS3 = larsclock.o
+
+SRCS4 = larsmenu.c
+OBJS4 = larsmenu.o
+
+ComplexProgramTarget_1(larswm, $(XLIB), NullParameter)
+ComplexProgramTarget_2(larsremote, $(XLIB), NullParameter)
+ComplexProgramTarget_3(larsclock, $(XLIB), NullParameter)
+ComplexProgramTarget_4(larsmenu, $(XMULIB), NullParameter)

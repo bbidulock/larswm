@@ -1,0 +1,120 @@
+***************************************
+* larswm - Lars Tiling Window Manager *
+***************************************
+
+
+Introduction:
+
+--------------------------------------------------------------------------
+|
+| This is not really a completely new window manager, but rather a
+| heavily modified version of David Hogan's 9wm.
+| In following his licensing terms, I release this under
+| a different name than 9wm.
+| Please see the file README.9wm for David's original license.
+| 
+| The same deal applies to Arnold Robbins' menu program (9menu)
+| that is included in the larswm distribution. I changed the name
+| of it because I made a couple of changes to the code, and also
+| so that if you use a package manager to install both larswm
+| and 9menu, you would not get a conflict.
+| Please see the file README.9menu for Arnold's original license.
+|
+--------------------------------------------------------------------------
+
+
+Where can I find new versions? Where can I find more documentation?
+
+http://larswm.fnurt.net
+
+
+How do I compile and install it?
+
+xmkmf -a
+make install install.man
+
+
+Compiling with gcc under Solaris:
+
+I don't have Sun C installed, only gcc. In order to make the Imakefile
+work with the standard X11 installation in /usr/openwin, I had to add
+a few lines at the top of the Imakefile.
+If you're having trouble compiling on Solaris, try editing/removing those.
+
+
+##########################################################################
+##########################################################################
+
+Known problems:
+
+When opening xterms they sometimes think they are 80x24 even though
+they have been tiled to some other size.
+Workaround: Put this line in your .bashrc or .cshrc
+
+	eval `resize`
+
+
+Other issues:
+
+1. Keyboard shortcuts don't work when any of the locked modifiers are active.
+   That is, if you configure a shortcut as Control-Alt-x, then it will
+   not work if ShiftLock, NumLock or ScrollLock is on.
+	Workaround:	If you most of the time have NumLock on, you can
+			configure all your keyboard shortcuts to include
+			the Mod2 modifer. That is, if you want to use
+			Alt-Tab to go to previous window, instead of
+			larswm.prev_window_key: Tab
+			larswm.prev_window_mod: Alt
+			change the last line to read
+			larswm.prev_window_mod: Mod2+Alt
+			Now it won't work when NumLock is off, so only
+			do this if NumLock is on most of the time.
+			The names for the modifers you might want to do
+			this for are:
+				Key		Symbol
+				-------------------------
+				CapsLock	ShiftLock
+				NumLock		Mod2
+				ScrollLock	Mod5
+
+##########################################################################
+##########################################################################
+
+
+SUN KEYBOARD SPECIFICS:
+
+To make the KP_ bindings work on a Sun keyboard, I use this xmodmap file:
+
+---BEGIN---
+keycode 75 = KP_Home
+keycode 76 = KP_Up
+keycode 77 = KP_Prior
+keycode 98 = KP_Left
+keycode 99 = KP_Begin
+keycode 100 = KP_Right
+keycode 119 = KP_End
+keycode 120 = KP_Down
+keycode 121 = KP_Next
+---END---
+
+Just put this in a file somewhere, and load it from
+your .xsession BEFORE starting larswm:
+
+---BEGIN---
+xmodmap /path/to/file
+---END---
+
+If you are using another type of keyboard, and the keypad doesn't
+seem to work, use 'xev' to find the keycodes for each key, and then
+remap them in a similar way.
+
+
+LICENSING:
+
+Please see README.9wm for David Hogan's original 9wm license
+and README.9menu for Arnold Robbins' original 9menu license.
+The same type of license applies to all of my code.
+
+
+---
+Lars Bernhardsson <lab@fnurt.net>
