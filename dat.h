@@ -181,6 +181,7 @@ struct Prefs
   int left_track_width[MAXSCREENS][MAXDESKTOPS];
 
   int desktops;
+  int panelsize;
   char *dtname[MAXSCREENS][MAXDESKTOPS];
 
   char *bgstr;

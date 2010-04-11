@@ -519,7 +519,9 @@ tile_all (ScreenInfo * s)
   track_width_right = track_width[s->num][1];
 
   screen_height_left = (res_track & 1 ? s->res_height : s->tile_height);
+	screen_height_left -= prefs.panelsize;
   screen_height_right = (res_track & 2 ? s->res_height : s->tile_height);
+	screen_height_right -= prefs.panelsize;
 
   if (clients_right)
     {
@@ -547,14 +549,14 @@ tile_all (ScreenInfo * s)
               width = track_width_left - TILE_PAD;
               if (clients_left == 2)
                 {
-                  y = 0;
+                  y = prefs.panelsize;
                   height = screen_height_left * s->two_on_left[s->desktop] / 100;
                   screen_y_left = height;
                   height -= TILE_PAD;
                 }
 	      else
                 {
-                  y = screen_y_left;
+                  y = screen_y_left + prefs.panelsize;
                   height = screen_height_left - screen_y_left;
                 }
  
@@ -567,11 +569,11 @@ tile_all (ScreenInfo * s)
 	  else
 	    {
 	      x = track_width_left;
-	      y = screen_height_right - screen_height_left;
-              height = vertical_tile_spacing - TILE_PAD;
+	      y = screen_height_right - screen_height_left + prefs.panelsize;
+	      height = vertical_tile_spacing - TILE_PAD;
 	      width = track_width_right;
 
-              current_bottom_y -= vertical_tile_spacing;
+	      current_bottom_y -= vertical_tile_spacing;
 
 	      if (++current_client < clients_right)
                 screen_height_left -= vertical_tile_spacing;
@@ -1231,7 +1233,7 @@ move_northwest (Client * c)
   if (c && c->isnotile)
     {
       c->x = 0;
-      c->y = 0;
+      c->y = prefs.panelsize;
       XMoveWindow (dpy, c->parent, c->x, c->y);
       sendconfig (c);
     }
@@ -1243,7 +1245,7 @@ move_north (Client * c)
   if (c && c->isnotile)
     {
       c->x = (DisplayWidth (dpy, c->screen->num) / 2) - (c->dx / 2) - BORDER;
-      c->y = 0;
+      c->y = prefs.panelsize;
 
       if (c->x < 0)
 	c->x = 0;
@@ -1259,7 +1261,7 @@ move_northeast (Client * c)
   if (c && c->isnotile)
     {
       c->x = (DisplayWidth (dpy, c->screen->num)) - (c->dx) - (2 * BORDER);
-      c->y = 0;
+      c->y = prefs.panelsize;
       XMoveWindow (dpy, c->parent, c->x, c->y);
       sendconfig (c);
     }
@@ -1273,8 +1275,8 @@ move_west (Client * c)
       c->x = 0;
       c->y = (c->screen->tile_height / 2) - (c->dy / 2) - BORDER;
 
-      if (c->y < 0)
-	c->y = 0;
+      if (c->y < prefs.panelsize)
+	c->y = prefs.panelsize;
 
       XMoveWindow (dpy, c->parent, c->x, c->y);
       sendconfig (c);
@@ -1292,8 +1294,8 @@ move_center (Client * c)
       if (c->x < 0)
 	c->x = 0;
 
-      if (c->y < 0)
-	c->y = 0;
+      if (c->y < prefs.panelsize)
+	c->y = prefs.panelsize;
 
       XMoveWindow (dpy, c->parent, c->x, c->y);
       sendconfig (c);
@@ -1308,8 +1310,8 @@ move_east (Client * c)
       c->x = DisplayWidth (dpy, c->screen->num) - c->dx - (2 * BORDER);
       c->y = (c->screen->tile_height / 2) - (c->dy / 2) - BORDER;
 
-      if (c->y < 0)
-	c->y = 0;
+      if (c->y < prefs.panelsize)
+	c->y = prefs.panelsize;
 
       XMoveWindow (dpy, c->parent, c->x, c->y);
       sendconfig (c);
@@ -1366,8 +1368,8 @@ move_up (Client * c)
       else
 	c->y--;
 
-      if (c->y < 0)
-	c->y = 0;
+      if (c->y < prefs.panelsize)
+	c->y = prefs.panelsize;
 
       XMoveWindow (dpy, c->parent, c->x, c->y);
       sendconfig (c);
@@ -1599,7 +1601,7 @@ grow (Client * c, int dimension, int m)
   h = ody = c->dy;
 
   dw = DisplayWidth (dpy, c->screen->num) - (2 * BORDER);
-  dh = c->screen->tile_height - (2 * BORDER);
+  dh = c->screen->tile_height - (2 * BORDER) - prefs.panelsize;
 
   if (c->screen->bigmr[c->screen->desktop])
     {
@@ -1643,8 +1645,8 @@ grow (Client * c, int dimension, int m)
       if ((y + h) > dh)
 	y = dh - h;
 
-      if (y < 0)
-	y = 0;
+      if (y < prefs.panelsize)
+	y = prefs.panelsize;
 
       if ((y + h) > dh)
 	h = dh;
@@ -1814,8 +1816,8 @@ move_select (Client * c, int untiled)
   if (c->x < 0)
     c->x = 0;
 
-  if (c->y < 0)
-    c->y = 0;
+  if (c->y < prefs.panelsize)
+    c->y = prefs.panelsize;
 
   c->zx = c->x;
   c->zy = c->y;

@@ -42,6 +42,7 @@ set_defaults (void)
     }
 
   prefs.desktops = 4;
+  prefs.panelsize = 0;
 
   for (i = 0; i < MAXSCREENS; i++)
     {
@@ -388,6 +389,10 @@ dump_prefs (void)
 	  MAXDESKTOPS);
   printf ("!\n");
   printf ("! larswm.desktops: %d\n", prefs.desktops);
+  printf ("!\n");
+  printf ("! Size of the space reserved at top for a panel.\n");
+  printf ("!\n");
+  printf ("! larswm.panelsize: %d\n", prefs.panelsize);
   printf ("!\n");
   printf ("! Virtual desktop names:\n");
   printf ("!\n");
@@ -825,6 +830,9 @@ load_prefs (char *filename)
 
   if (XrmGetResource (db, "larswm.desktops", "Larswm.Desktops", &vt, &v))
     prefs.desktops = atoi (v.addr);
+
+  if (XrmGetResource (db, "larswm.panelsize", "Larswm.Panelsize", &vt, &v))
+    prefs.panelsize = atoi (v.addr);
 
   for (i = 0; i < MAXSCREENS; i++)
     {
