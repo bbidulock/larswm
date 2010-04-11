@@ -259,6 +259,11 @@ initkeys (Client * c)
 		  prefs.two_on_left_grow_mod, c->parent, True, GrabModeAsync,
 		  GrabModeAsync);
 
+      if (prefs.toggle_skip_focus_key)
+	XGrabKey (dpy, XKeysymToKeycode (dpy, prefs.toggle_skip_focus_key),
+		  prefs.toggle_skip_focus_mod, c->parent, True, GrabModeAsync,
+		  GrabModeAsync);
+      
       for (y = 0; y < prefs.desktops; y++)
 	if (prefs.goto_desktop_key[y])
 	  XGrabKey (dpy, XKeysymToKeycode (dpy, prefs.goto_desktop_key[y]),
@@ -327,6 +332,11 @@ initkeys (Client * c)
 	  if (prefs.unhide_key)
 	    XGrabKey (dpy, XKeysymToKeycode (dpy, prefs.unhide_key),
 		      prefs.unhide_mod, screens[i].root, True, GrabModeAsync,
+		      GrabModeAsync);
+
+	  if (prefs.toggle_skip_focus_key)
+	    XGrabKey (dpy, XKeysymToKeycode (dpy, prefs.toggle_skip_focus_key),
+		      prefs.toggle_skip_focus_mod, screens[i].root, True, GrabModeAsync,
 		      GrabModeAsync);
 
 	  if (prefs.move_aside_key)
@@ -455,6 +465,8 @@ keyevent (XKeyEvent * e)
     unhide_last (s);
   else if (k == prefs.close_key && m == prefs.close_mod)
     wmdelete (current, 0);
+  else if (k == prefs.toggle_skip_focus_key && m == prefs.toggle_skip_focus_mod)
+    toggle_skip_focus (s);
   else if (k == prefs.move_next_desktop_key && m == prefs.move_next_desktop_mod)
     move_other_desktop(current, -1);
   else if (k == prefs.move_prev_desktop_key && m == prefs.move_prev_desktop_mod)

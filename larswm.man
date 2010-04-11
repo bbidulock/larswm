@@ -384,6 +384,7 @@ Shift-Control	Down	Next Window
 Control-Alt	z	Hide Window
 Control-Alt	x	Unhide last hidden window
 Control-Alt	w	Close Window
+Control-Alt	f	Toggle skip_focus
 Shift-Alt	space	Move window to other subdesktop
 Shift-Alt	Delete/Next	Move window to prev/next virtual desktop
 Shift-Alt	F1-F12	Move window to virtual desktop 1-12

@@ -198,6 +198,9 @@ set_defaults (void)
   prefs.two_on_left_grow_key = XK_Down;
   prefs.two_on_left_grow_mod = GROW_MOD;
 
+  prefs.toggle_skip_focus_key = XK_f;
+  prefs.toggle_skip_focus_mod = CLOSE_MOD;
+
   /* provide defaults for up to 12 virtual desktops */
   prefs.goto_desktop_key[0] = XK_F1;
   prefs.goto_desktop_mod[0] = DEFAULT_MOD;
@@ -627,6 +630,9 @@ dump_prefs (void)
   printf ("! larswm.shrink_both_key: %s\n",
 	  XKeysymToString (prefs.shrink_both_key));
   printf ("! larswm.shrink_both_mod: %s\n", show_mod (prefs.shrink_both_mod));
+  printf ("!\n");
+  printf ("! larswm.toggle_skip_focus_key: %s\n", XKeysymToString (prefs.toggle_skip_focus_key));
+  printf ("! larswm.toggle_skip_focus_mod: %s\n", show_mod (prefs.toggle_skip_focus_mod));
   printf ("!\n");
 
   printf ("! larswm.zoom_vert_key: %s\n",
@@ -1377,5 +1383,12 @@ load_prefs (char *filename)
     prefs.two_on_left_mod = get_mod (v.addr);
 
 
+  if (XrmGetResource (db, "larswm.toggle_skip_focus_key", "Larswm.Toggle_skip_focus_key", &vt, &v))
+    prefs.toggle_skip_focus_key = XStringToKeysym (v.addr);
+
+  if (XrmGetResource (db, "larswm.toggle_skip_focus_mod", "Larswm.Toggle_skip_focus_mod", &vt, &v))
+    prefs.toggle_skip_focus_mod = get_mod (v.addr);
+
+  
   validate_prefs ();
 }

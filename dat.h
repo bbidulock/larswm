@@ -335,6 +335,9 @@ struct Prefs
   KeySym two_on_left_grow_key;
   unsigned long two_on_left_grow_mod;
 
+  KeySym toggle_skip_focus_key;
+  unsigned long toggle_skip_focus_mod;
+
   KeySym goto_desktop_key[MAXDESKTOPS];
   unsigned long goto_desktop_mod[MAXDESKTOPS];
 
