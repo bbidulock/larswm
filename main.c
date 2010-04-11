@@ -367,6 +367,7 @@ initscreen (ScreenInfo * s, int i)
     {
       s->clickthru[t] = prefs.clickthru[s->num][t];
       s->tile_resize[t] = prefs.tile_resize[s->num][t];
+      s->tile_show_bottom[t] = prefs.tile_show_bottom[s->num][t];
       s->skip_focus[t] = prefs.skip_focus[s->num][t];
       s->left_track_width[t] = prefs.left_track_width[s->num][t];
       s->bigmr[t] = 1;

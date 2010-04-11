@@ -300,6 +300,16 @@ toggle_tile_resize (ScreenInfo * s)
 }
 
 void
+toggle_show_bottom (ScreenInfo * s)
+{
+  if (s)
+    s->tile_show_bottom[s->desktop] = !s->tile_show_bottom[s->desktop];
+
+  tile_all(s);
+  update_tbar ();
+}
+
+void
 toggle_skip_focus (ScreenInfo * s)
 {
   if (s)
@@ -476,8 +486,24 @@ tile_all (ScreenInfo * s)
 
   unsigned short on_right = 0;
 
+  /** if tile_show_bottom, then place windows bottom at this level. */
+  unsigned int current_bottom_y; 
+
+  /** how much distance between consecutive tile lower/upper borders. */
+  unsigned int vertical_tile_spacing;
+
+
   if (!s)
     abort ();
+
+
+  clients_right = count_clients (s);
+
+  if (clients_right == 0)
+    return;
+
+  clients_left = 1;
+  --clients_right;
 
 
   calc_track_sizes (s);
@@ -489,13 +515,13 @@ tile_all (ScreenInfo * s)
   screen_height_left = (res_track & 1 ? s->res_height : s->tile_height);
   screen_height_right = (res_track & 2 ? s->res_height : s->tile_height);
 
-  clients_right = count_clients (s);
+  if (clients_right)
+    {
+      vertical_tile_spacing = screen_height_right / clients_right;
 
-  if (clients_right == 0)
-    return;
-
-  clients_left = 1;
-  --clients_right;
+      /* first tiled window sits right above the bar */
+      current_bottom_y = screen_height_right + vertical_tile_spacing - 2*BORDER;
+    }
 
   for (c = clients; c; c = c->next)
     {
@@ -513,14 +539,13 @@ tile_all (ScreenInfo * s)
 	    {
 	      x = track_width_left;
 	      y = screen_height_right - screen_height_left;
-	      height = screen_height_right / clients_right;
+              height = vertical_tile_spacing - TILE_PAD;
 	      width = track_width_right;
 
+              current_bottom_y -= vertical_tile_spacing;
+
 	      if (++current_client < clients_right)
-		{
-		  screen_height_left -= height;
-		  height -= TILE_PAD;
-		}
+                screen_height_left -= vertical_tile_spacing;
 	      else
 		height = screen_height_left;
 
@@ -595,9 +620,6 @@ tile_all (ScreenInfo * s)
 	  odx = c->dx;
 	  ody = c->dy;
 
-	  c->x = x;
-	  c->y = y;
-
 	  /*
 	   * if resize is true OR we're at the upper left corner
 	   * set size to maximum
@@ -607,6 +629,12 @@ tile_all (ScreenInfo * s)
 	      c->dx = width;
 	      c->dy = height;
 	    }
+
+          c->x = x;
+          c->y = (on_right
+                  && s->tile_show_bottom[s->desktop] 
+                  && !s->tile_resize[s->desktop]) ?
+            (current_bottom_y - c->dy) : y;
 
 	  XMoveResizeWindow (dpy, c->parent, c->x, c->y,
 			     c->dx + (2 * BORDER), c->dy + (2 * BORDER));

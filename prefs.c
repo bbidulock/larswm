@@ -348,6 +348,12 @@ dump_prefs (void)
   printf ("! larswm.?.?.tile_resize: %s\n",
 	  show_bool (prefs.tile_resize[0][0]));
   printf ("!\n");
+  printf
+    ("! Keep bottom part of tiled windows visible? (If not, keep top part visible)\n");
+  printf ("!\n");
+  printf ("! larswm.?.?.tile_show_bottom: %s\n",
+          show_bool (prefs.tile_show_bottom[0][0]));
+  printf ("!\n");
   printf ("! Width of left track in percent: (5-95)\n");
   printf ("!\n");
   printf ("! larswm.?.?.left_track_width: %d\n",
@@ -748,6 +754,9 @@ load_prefs (char *filename)
 			     &prefs.skip_focus[i][j], get_bool);
 	  check_idx_intfunc (db, "tile_resize", "Tile_resize", i, j,
 			     &prefs.tile_resize[i][j], get_bool);
+          check_idx_intfunc (db, "tile_show_bottom", 
+                                 "Tile_show_bottom", i, j,
+                             &prefs.tile_show_bottom[i][j], get_bool);
 	  check_idx_intfunc (db, "left_track_width", "Left_track_width", i, j,
 			     &prefs.left_track_width[i][j], atoi);
 	}

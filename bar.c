@@ -20,15 +20,16 @@ static char *cmd_output_ptr = 0;
 int bar_hidden = 0;
 
 #define MENU_BASE -10
-#define MENU_ENTRIES 6
+#define MENU_ENTRIES 7
 
 static char *menu[] = {
-  "Menu [1/6]  Toggle clickthru    (Desktop)",
-  "Menu [2/6]  Toggle tile_resize  (Desktop)",
-  "Menu [3/6]  Toggle skip_focus   (Desktop)",
-  "Menu [4/6]  Toggle floatclass    (Window)",
-  "Menu [5/6]  Toggle toolclass     (Window)",
-  "Menu [6/6]  Toggle stickyclass   (Window)",
+  "Menu [1/7]  Toggle clickthru    (Desktop)",
+  "Menu [2/7]  Toggle tile_resize  (Desktop)",
+  "Menu [3/7]  Toggle show_bottom  (Desktop)",
+  "Menu [4/7]  Toggle skip_focus   (Desktop)",
+  "Menu [5/7]  Toggle floatclass    (Window)",
+  "Menu [6/7]  Toggle toolclass     (Window)",
+  "Menu [7/7]  Toggle stickyclass   (Window)",
 };
 
 /* Make sure all menu entries really are this length! */
@@ -99,15 +100,18 @@ do_menu (ScreenInfo * s)
 	toggle_tile_resize (s);
 	break;
       case 2:
-	toggle_skip_focus (s);
+        toggle_show_bottom (s);
 	break;
       case 3:
+        toggle_skip_focus (s);
+        break;
+      case 5:
 	toggle_isfloat (current);
 	break;
-      case 4:
+      case 6:
 	toggle_istool (current);
 	break;
-      case 5:
+      case 7:
 	toggle_issticky (current);
 	break;
       }
@@ -294,12 +298,13 @@ void draw_tbar (ScreenInfo *s)
           prefs.dtname[s->num][s->desktop]);
     }
 
-  buffer_append (&bartext_status_ptr, &bartext_status_len, "[%c%c%c%c%c%c]",
+  buffer_append (&bartext_status_ptr, &bartext_status_len, "[%c%c%c%c%c%c%c]",
       s->notile_raised[s->desktop] ? 'U' : 'T',
       s->clickthru[s->desktop] ? 'C' : '-',
       s->tile_resize[s->desktop] ? 'R' : '-',
       s->skip_focus[s->desktop] ? 'S' : '-',
       s->bigmr[s->desktop] ? 'B' : '-',
+      s->tile_show_bottom[s->desktop] ? '_' : '-',
       numhidden ? 'H' : '-');
 
   /*

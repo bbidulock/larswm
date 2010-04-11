@@ -154,6 +154,7 @@ struct ScreenInfo
   int bigmr[MAXDESKTOPS];
   int clickthru[MAXDESKTOPS];
   int tile_resize[MAXDESKTOPS];
+  int tile_show_bottom[MAXDESKTOPS];
   int skip_focus[MAXDESKTOPS];
   int left_track_width[MAXDESKTOPS];
   int notile_raised[MAXDESKTOPS];
@@ -165,6 +166,7 @@ struct Prefs
 {
   int clickthru[MAXSCREENS][MAXDESKTOPS];
   int tile_resize[MAXSCREENS][MAXDESKTOPS];
+  int tile_show_bottom[MAXSCREENS][MAXDESKTOPS];
   int skip_focus[MAXSCREENS][MAXDESKTOPS];
   int left_track_width[MAXSCREENS][MAXDESKTOPS];
 
