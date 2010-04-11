@@ -45,9 +45,17 @@ initkeys (Client * c)
 	XGrabKey (dpy, XKeysymToKeycode (dpy, prefs.prev_window_key),
 		  prefs.prev_window_mod, c->parent, True, GrabModeAsync,
 		  GrabModeAsync);
+      if (prefs.prev_window_focus_key)
+	XGrabKey (dpy, XKeysymToKeycode (dpy, prefs.prev_window_focus_key),
+ 		  prefs.prev_window_focus_mod, c->parent, True, GrabModeAsync,
+		  GrabModeAsync);
       if (prefs.next_window_key)
 	XGrabKey (dpy, XKeysymToKeycode (dpy, prefs.next_window_key),
 		  prefs.next_window_mod, c->parent, True, GrabModeAsync,
+		  GrabModeAsync);
+		  if (prefs.next_window_focus_key)
+	XGrabKey (dpy, XKeysymToKeycode (dpy, prefs.next_window_focus_key),
+		  prefs.next_window_focus_mod, c->parent, True, GrabModeAsync,
 		  GrabModeAsync);
 
       if (prefs.move_northwest_key)
@@ -399,8 +407,12 @@ keyevent (XKeyEvent * e)
     next_desktop_drag (s);
   else if (k == prefs.prev_window_key && m == prefs.prev_window_mod)
     prev_window (s);
+	else if (k == prefs.prev_window_focus_key && m == prefs.prev_window_focus_mod)
+    prev_window_focus (s);
   else if (k == prefs.next_window_key && m == prefs.next_window_mod)
     next_window (s);
+  else if (k == prefs.next_window_focus_key && m == prefs.next_window_focus_mod)
+    next_window_focus (s);
   else if (k == prefs.raise_notile_key && m == prefs.raise_notile_mod)
     toggle_notile (s);
   else if (k == prefs.move_northwest_key && m == prefs.move_northwest_mod)

@@ -225,8 +225,14 @@ struct Prefs
   KeySym prev_window_key;
   unsigned long prev_window_mod;
 
+  KeySym prev_window_focus_key;
+  unsigned long prev_window_focus_mod;
+
   KeySym next_window_key;
   unsigned long next_window_mod;
+
+  KeySym next_window_focus_key;
+  unsigned long next_window_focus_mod;
 
   KeySym raise_notile_key;
   unsigned long raise_notile_mod;

@@ -1005,6 +1005,17 @@ prev_window (ScreenInfo * s)
 }
 
 void
+prev_window_focus (ScreenInfo * s)
+{
+  if (s)
+    {
+      s->skip_focus[s->desktop] = !s->skip_focus[s->desktop];
+      prev_window (s);
+      s->skip_focus[s->desktop] = !s->skip_focus[s->desktop];
+    }
+}
+
+void
 next_window (ScreenInfo * s)
 {
   Client *c;
@@ -1084,6 +1095,17 @@ next_window (ScreenInfo * s)
 
 	  return;
 	}
+    }
+}
+
+void
+next_window_focus (ScreenInfo * s)
+{
+  if (s)
+    {
+      s->skip_focus[s->desktop] = !s->skip_focus[s->desktop];
+      next_window (s);
+      s->skip_focus[s->desktop] = !s->skip_focus[s->desktop];
     }
 }
 

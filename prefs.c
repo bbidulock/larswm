@@ -85,8 +85,14 @@ set_defaults (void)
   prefs.prev_window_key = XK_Up;
   prefs.prev_window_mod = DEFAULT_MOD;
 
+  prefs.prev_window_focus_key = XK_Up;
+  prefs.prev_window_focus_mod = CLOSE_MOD;
+
   prefs.next_window_key = XK_Down;
   prefs.next_window_mod = DEFAULT_MOD;
+
+  prefs.next_window_focus_key = XK_Down;
+  prefs.next_window_focus_mod = CLOSE_MOD;
 
   prefs.raise_notile_key = XK_BackSpace;
   prefs.raise_notile_mod = DEFAULT_MOD;
@@ -521,9 +527,19 @@ dump_prefs (void)
 	  XKeysymToString (prefs.prev_window_key));
   printf ("! larswm.prev_window_mod: %s\n", show_mod (prefs.prev_window_mod));
   printf ("!\n");
+  printf ("! larswm.prev_window_focus_key: %s\n",
+	  XKeysymToString (prefs.prev_window_focus_key));
+  printf ("! larswm.prev_window_focus_mod: %s\n",
+	  show_mod (prefs.prev_window_focus_mod));
+  printf ("!\n");
   printf ("! larswm.next_window_key: %s\n",
 	  XKeysymToString (prefs.next_window_key));
   printf ("! larswm.next_window_mod: %s\n", show_mod (prefs.next_window_mod));
+  printf ("!\n");
+  printf ("! larswm.next_window_focus_key: %s\n",
+	  XKeysymToString (prefs.next_window_focus_key));
+  printf ("! larswm.next_window_focus_mod: %s\n",
+	  show_mod (prefs.next_window_focus_mod));
   printf ("!\n");
 
   printf ("! larswm.raise_notile_key: %s\n",
@@ -1032,12 +1048,30 @@ load_prefs (char *filename)
 
 
   if (XrmGetResource
+      (db, "larswm.prev_window_focus_key", "Larswm.Prev_window_focus_key", &vt, &v))
+    prefs.prev_window_focus_key = XStringToKeysym (v.addr);
+
+  if (XrmGetResource
+      (db, "larswm.prev_window_focus_mod", "Larswm.Prev_window_focus_mod", &vt, &v))
+    prefs.prev_window_focus_mod = get_mod (v.addr);
+
+
+	if (XrmGetResource
       (db, "larswm.next_window_key", "Larswm.Next_window_key", &vt, &v))
     prefs.next_window_key = XStringToKeysym (v.addr);
 
   if (XrmGetResource
       (db, "larswm.next_window_mod", "Larswm.Next_window_mod", &vt, &v))
     prefs.next_window_mod = get_mod (v.addr);
+
+
+  if (XrmGetResource
+      (db, "larswm.next_window_focus_key", "Larswm.Next_window_focus_key", &vt, &v))
+    prefs.next_window_focus_key = XStringToKeysym (v.addr);
+
+  if (XrmGetResource
+      (db, "larswm.next_window_focus_mod", "Larswm.Next_window_focus_mod", &vt, &v))
+    prefs.next_window_focus_mod = get_mod (v.addr);
 
 
   for (i = 0; i < MAXDESKTOPS; i++)
