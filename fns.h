@@ -133,6 +133,8 @@ void move_aside_clear (ScreenInfo *, Client *);
 void zoom (Client *, int);
 void grow (Client *, int, int);
 void move_sd (Client *);
+void two_on_left (ScreenInfo *);
+void two_on_left_grow (ScreenInfo *, int);
 
 /* prefs.c */
 void set_defaults (void);

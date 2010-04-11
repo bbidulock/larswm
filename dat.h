@@ -51,6 +51,9 @@
 #define DIM_HORIZ	2
 #define DIM_OUTSIDE     4
 
+/*for zooming vertically on left track (in per cent)*/
+#define VERT_GROW 5
+
 /* to keep track of if a window is zoomed max */
 /* height/width/both or select zoomed */
 #define ZOOM_UNZOOMED 0
@@ -151,12 +154,19 @@ struct ScreenInfo
   int tile_height;
   int res_height;
 
+/*
+  two_on_left:
+  When it is 0, there will be one window at left track.
+  When it <> 0, there wiil be two windows and the value indicates the height of window.
+ */
+  int two_on_left[MAXDESKTOPS];
   int bigmr[MAXDESKTOPS];
   int clickthru[MAXDESKTOPS];
   int tile_resize[MAXDESKTOPS];
   int tile_show_bottom[MAXDESKTOPS];
   int skip_focus[MAXDESKTOPS];
   int left_track_width[MAXDESKTOPS];
+  int left_track_height[MAXDESKTOPS];
   int notile_raised[MAXDESKTOPS];
   Client *focused[MAXDESKTOPS];
   Client *notilefocused[MAXDESKTOPS];
@@ -309,6 +319,15 @@ struct Prefs
 
   KeySym close_key;
   unsigned long close_mod;
+
+  KeySym two_on_left_key;
+  unsigned long two_on_left_mod;
+
+  KeySym two_on_left_shrink_key;
+  unsigned long two_on_left_shrink_mod;
+
+  KeySym two_on_left_grow_key;
+  unsigned long two_on_left_grow_mod;
 
   KeySym goto_desktop_key[MAXDESKTOPS];
   unsigned long goto_desktop_mod[MAXDESKTOPS];

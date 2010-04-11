@@ -183,6 +183,15 @@ set_defaults (void)
   prefs.close_key = XK_w;
   prefs.close_mod = CLOSE_MOD;
 
+  prefs.two_on_left_key = XK_Left;
+  prefs.two_on_left_mod = GROW_MOD;
+
+  prefs.two_on_left_shrink_key = XK_Up;
+  prefs.two_on_left_shrink_mod = GROW_MOD;
+
+  prefs.two_on_left_grow_key = XK_Down;
+  prefs.two_on_left_grow_mod = GROW_MOD;
+
   /* provide defaults for up to 12 virtual desktops */
   prefs.goto_desktop_key[0] = XK_F1;
   prefs.goto_desktop_mod[0] = DEFAULT_MOD;
@@ -603,6 +612,15 @@ dump_prefs (void)
   printf ("!\n");
   printf ("! larswm.close_key: %s\n", XKeysymToString (prefs.close_key));
   printf ("! larswm.close_mod: %s\n", show_mod (prefs.close_mod));
+  printf ("!\n");
+  printf ("! larswm.two_on_left_key: %s\n", XKeysymToString (prefs.two_on_left_key));
+  printf ("! larswm.two_on_left_mod: %s\n", show_mod (prefs.two_on_left_mod));
+  printf ("!\n");
+  printf ("! larswm.two_on_left_shrink_key: %s\n", XKeysymToString (prefs.two_on_left_shrink_key));
+  printf ("! larswm.two_on_left_shrink_mod: %s\n", show_mod (prefs.two_on_left_shrink_mod));
+  printf ("!\n");
+  printf ("! larswm.two_on_left_grow_key: %s\n", XKeysymToString (prefs.two_on_left_grow_key));
+  printf ("! larswm.two_on_left_grow_mod: %s\n", show_mod (prefs.two_on_left_grow_mod));
   printf ("!\n");
 
   printf
@@ -1291,6 +1309,13 @@ load_prefs (char *filename)
 
   if (XrmGetResource (db, "larswm.close_mod", "Larswm.Close_mod", &vt, &v))
     prefs.close_mod = get_mod (v.addr);
+
+  if (XrmGetResource (db, "larswm.two_on_left_key", "Larswm.Two_on_left_key", &vt, &v))
+    prefs.two_on_left_key = XStringToKeysym (v.addr);
+
+  if (XrmGetResource (db, "larswm.two_on_left_mod", "Larswm.Two_on_left_mod", &vt, &v))
+    prefs.two_on_left_mod = get_mod (v.addr);
+
 
   validate_prefs ();
 }

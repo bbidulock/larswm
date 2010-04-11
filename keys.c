@@ -234,6 +234,21 @@ initkeys (Client * c)
 		  prefs.unhide_mod, c->parent, True, GrabModeAsync,
 		  GrabModeAsync);
 
+      if (prefs.two_on_left_key)
+	XGrabKey (dpy, XKeysymToKeycode (dpy, prefs.two_on_left_key),
+		  prefs.two_on_left_mod, c->parent, True, GrabModeAsync,
+		  GrabModeAsync);
+
+      if (prefs.two_on_left_shrink_key)
+	XGrabKey (dpy, XKeysymToKeycode (dpy, prefs.two_on_left_shrink_key),
+		  prefs.two_on_left_shrink_mod, c->parent, True, GrabModeAsync,
+		  GrabModeAsync);
+
+      if (prefs.two_on_left_grow_key)
+	XGrabKey (dpy, XKeysymToKeycode (dpy, prefs.two_on_left_grow_key),
+		  prefs.two_on_left_grow_mod, c->parent, True, GrabModeAsync,
+		  GrabModeAsync);
+
       for (y = 0; y < prefs.desktops; y++)
 	if (prefs.goto_desktop_key[y])
 	  XGrabKey (dpy, XKeysymToKeycode (dpy, prefs.goto_desktop_key[y]),
@@ -425,6 +440,12 @@ keyevent (XKeyEvent * e)
     unhide_last (s);
   else if (k == prefs.close_key && m == prefs.close_mod)
     wmdelete (current, 0);
+  else if (k == prefs.two_on_left_key && m == prefs.two_on_left_mod)
+    two_on_left (s);
+  else if (k == prefs.two_on_left_shrink_key && m == prefs.two_on_left_shrink_mod)
+    two_on_left_grow (s, -VERT_GROW);
+  else if (k == prefs.two_on_left_grow_key && m == prefs.two_on_left_grow_mod)
+    two_on_left_grow (s, VERT_GROW);
   else
     {
       int i;

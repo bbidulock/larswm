@@ -432,6 +432,9 @@ Shift-Control-Alt	KP_Up	Maximize left track
 Shift-Control-Alt	KP_Down	Restore left track
 Shift-Control-Alt	KP_Left	Shrink left track
 Shift-Control-Alt	KP_Right	Grow left track
+Shift-Control-Alt	Left	Turn on/off two windows on left track (tiled)
+Shift-Control-Alt	Down	Shrink vertically bottom window on left track when "two on left" is on (tiled)
+Shift-Control-Alt	UP	Grow vertically bottom window on left track when "two on left" is on (tiled)
 Shift-Alt	KP_Begin	Move window to/from left track
 Control-Alt	space	Restore aside window
 .TE

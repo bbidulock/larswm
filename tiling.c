@@ -478,13 +478,11 @@ tile_all (ScreenInfo * s)
 {
   Client *c;
 
-  unsigned int screen_height_left, screen_height_right;
+  unsigned int screen_height_left, screen_height_right, screen_y_left = 0;
   unsigned int track_width_left, track_width_right;
 
   unsigned short clients_left, clients_right;
   unsigned short current_client = 0;
-
-  unsigned short on_right = 0;
 
   /** if tile_show_bottom, then place windows bottom at this level. */
   unsigned int current_bottom_y; 
@@ -502,8 +500,16 @@ tile_all (ScreenInfo * s)
   if (clients_right == 0)
     return;
 
+  if ( s->two_on_left[s->desktop] && (clients_right > 1))
+    {
+      clients_left = 2;
+      clients_right = clients_right - 2;
+    }
+  else
+    {
   clients_left = 1;
   --clients_right;
+    }
 
 
   calc_track_sizes (s);
@@ -535,7 +541,30 @@ tile_all (ScreenInfo * s)
 	  unsigned int x, y, width, height;
 	  unsigned int odx, ody;
 
-	  if (on_right)
+	  if (clients_left)
+            {
+              x = 0;
+              width = track_width_left - TILE_PAD;
+              if (clients_left == 2)
+                {
+                  y = 0;
+                  height = screen_height_left * s->two_on_left[s->desktop] / 100;
+                  screen_y_left = height;
+                  height -= TILE_PAD;
+                }
+	      else
+                {
+                  y = screen_y_left;
+                  height = screen_height_left - screen_y_left;
+                }
+ 
+                /*
+                 * Here the purpose of
+                 * screen_height_left changes
+                 */
+                screen_height_left = screen_height_right;
+            }
+	  else
 	    {
 	      x = track_width_left;
 	      y = screen_height_right - screen_height_left;
@@ -550,23 +579,13 @@ tile_all (ScreenInfo * s)
 		height = screen_height_left;
 
 	    }
-	  else
-	    {
-	      x = y = 0;
-	      height = screen_height_left;
-	      width = track_width_left - TILE_PAD;
-
-	      /*
-	       * Here the purpose of
-	       * screen_height_left changes
-	       */
-	      screen_height_left = screen_height_right;
-	    }
 
 	  height -= 2 * BORDER;
 	  width -= 2 * BORDER;
 
-	  c->isleft = on_right ? 0 : 1;
+	  /*I am not sure all this checking is needed*/
+	  c->isleft = (s->two_on_left[s->desktop] && clients_left == 2)
+		  || (!s->two_on_left[s->desktop] && clients_left) ? 1 : 0;
 
 	  odx = width;
 	  ody = height;
@@ -603,16 +622,27 @@ tile_all (ScreenInfo * s)
 	   * all of it or height left if a right window
 	   * doesn't use it all..
 	   */
-	  if (on_right)
+
+	   if (clients_left)
 	    {
+		   /*track_width_right += odx - width;
+		     track_width_left -= odx - width;*/
+	      if (odx != width)
+	      {
+		 track_width_right +=
+			 odx - width;
+		 track_width_left -=
+			 odx - width;
+	    }
+	      if ((clients_left == 2) && ody != height)
+		      screen_y_left -= ody - height;
+
+	    }
+	   else
 	      if (ody != height)
-		screen_height_left += ody - height;
-	    }
-	  else if (odx != width)
-	    {
-	      track_width_right += odx - width;
-	      track_width_left -= odx - width;
-	    }
+		      screen_height_left +=
+			      ody - height;
+
 
 	  /*
 	   * The second meaning begins
@@ -624,14 +654,14 @@ tile_all (ScreenInfo * s)
 	   * if resize is true OR we're at the upper left corner
 	   * set size to maximum
 	   */
-	  if (s->tile_resize[s->desktop] || !on_right)
+	  if (s->tile_resize[s->desktop] || clients_left)
 	    {
 	      c->dx = width;
 	      c->dy = height;
 	    }
 
           c->x = x;
-          c->y = (on_right
+          c->y = ((clients_left == 0)
                   && s->tile_show_bottom[s->desktop] 
                   && !s->tile_resize[s->desktop]) ?
             (current_bottom_y - c->dy) : y;
@@ -651,7 +681,8 @@ tile_all (ScreenInfo * s)
 		active (c);
 	    }
 
-	  on_right = 1;
+	  if (clients_left)
+	    --clients_left;
 	}
     }
 
@@ -664,6 +695,30 @@ tile_all (ScreenInfo * s)
   if (!s->notile_raised[s->desktop])
     {
       raise_tile (s, 0);
+    }
+}
+
+void
+two_on_left (ScreenInfo *s)
+{
+  if (s)
+    {
+      s->two_on_left[s->desktop] = (s->two_on_left[s->desktop] ? 0 : 50);
+      tile_all (s);
+    }
+}
+
+void
+two_on_left_grow (ScreenInfo *s, int dy)
+{
+  if (s && s->two_on_left[s->desktop])
+    {
+      int w = s->two_on_left[s->desktop] + dy;
+      if ((w > 0) && (w < 100))
+        {
+	  s->two_on_left[s->desktop] = w;
+	  tile_all (s);
+	}
     }
 }
 

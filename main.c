@@ -374,6 +374,7 @@ initscreen (ScreenInfo * s, int i)
       s->focused[t] = 0;
       s->notilefocused[t] = 0;
       s->notile_raised[t] = 0;
+      s->two_on_left[t] = 0;
     }
 
   s->barwin =
