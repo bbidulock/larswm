@@ -15,18 +15,18 @@ Applying:
 The patches are again larswm-7.5.3 but you can try it with other
 version (if you are feeling lucky :-).
 
-Unpack larswm source and patches (if you hasn't do it yet):
+Unpack larswm source and patches (if you have not do it yet):
 
     tar -xzvf larswm-7.5.3.tar.gz
-    tar -xzvf larswm-patches_7.5.3-5.tar.gz
+    tar -xzvf larswm-patches_7.5.3-6a.tar.gz
 
 Move patches in unpacked larswm tree:
 
-    mv larswm-patches_7.5.3-5 larswm-7.5.3
+    mv larswm-patches_7.5.3-6a larswm-7.5.3
 
 cd in patches and run patch.sh script:
 
-    cd larswm-7.5.3/larswm-patches_7.5.3-5
+    cd larswm-7.5.3/larswm-patches_7.5.3-6a
     ./patch.sh
 
 Now you can build larswm.
@@ -46,10 +46,11 @@ Description:
 
 0. Patch from Florian Forster (00_larswm-7.5.3+patches.patch).
 1. Larsclock `-update' option (aa_larsclock-update.patch).
-2. Switch to window with class/name (ca_larswm-switchclass.patch).
-3. Two windows on left track (da_larswm-two_on_left.patch).
-4. Move window to other desktop (ea_larswm-move_other_desktop.patch).
-5. Toggle skip fokus key binding (fa_larswm-toggle_skip_fokus.patch).
+2. Switch to window with class/name (ba_larswm-switchclass.patch).
+3. Riccardo Murri tile_show_bottom patch (ca_larswm-tile_show_bottom.patch).
+4. Two windows on left track (da_larswm-two_on_left.patch).
+5. Move window to other desktop (ea_larswm-move_other_desktop.patch).
+6. Toggle skip focus key binding (fa_larswm-toggle_skip_focus.patch).
 
 
 0. Patch from Florian Forster (00_larswm-7.5.3+patches.patch).
@@ -71,7 +72,7 @@ This patch adds `-update' option to larsclock:
                      larsclock should update status bar.
 
 
-2. Switch to window with class/name (ca_larswm-switchclass.patch).
+2. Switch to window with class/name (ba_larswm-switchclass.patch).
 ------------------------------------------------------------------
 
 The patch adds shortcuts to switch (focus) to window with defined name
@@ -114,7 +115,20 @@ Source modifications.
     prefs.c changed accordingly.
 
 
-3. Two windows on left track (da_larswm-two_on_left.patch).
+3. Riccardo Murri tile_show_bottom patch (ca_larswm-tile_show_bottom.patch).
+----------------------------------------------------------------------------
+
+The patch from Riccardo Murri adds a new configurable option
+`tile_show_bottom'. In desktops where that option is true, the bottom
+part of tiled windows is visible, instead of the top part.
+
+This may be useful because the bottom part of windows is where mutt,
+emacs, and other programs show their status messages; the part of a
+window to watch when ``tail -f``-ing; where the shell prompt is, after
+a few commands; etc.
+
+
+4. Two windows on left track (da_larswm-two_on_left.patch).
 -----------------------------------------------------------
 
 From time to time it is useful to have two windows on left track. For
@@ -163,7 +177,7 @@ Source modifications:
     In keys.c and prefs.c: corresponding changes for key binding.
 
 
-4. Move window to other desktop (ea_larswm-move_other_desktop.patch).
+5. Move window to other desktop (ea_larswm-move_other_desktop.patch).
 ---------------------------------------------------------------------
 
 This adds the ability to move window to othe virtual desktops.
@@ -201,7 +215,7 @@ Source modifications.
     for keyboard shortcuts.
 
 
-5. Toggle skip fokus key binding (fa_larswm-toggle_skip_focus.patch).
+6. Toggle skip focus key binding (fa_larswm-toggle_skip_focus.patch).
 ---------------------------------------------------------------------
 
 In "official" larswm the skip_focus could be toggled using bar menu,
