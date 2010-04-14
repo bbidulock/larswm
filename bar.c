@@ -264,12 +264,12 @@ void draw_tbar (ScreenInfo *s)
 
   XClearWindow (dpy, s->barwin);
 #ifdef THREE_D
-  XDrawLine (dpy, s->barwin, s->botwhitegc, 0, BAR_HEIGHT - 1,
-	     BAR_WIDTH (s) - 1, BAR_HEIGHT - 1);
-  XDrawLine (dpy, s->barwin, s->botwhitegc, BAR_WIDTH (s) - 1, BAR_HEIGHT - 1,
+  XDrawLine (dpy, s->barwin, s->botwhitegc, 0, prefs.bar_height - 1,
+	     BAR_WIDTH (s) - 1, prefs.bar_height - 1);
+  XDrawLine (dpy, s->barwin, s->botwhitegc, BAR_WIDTH (s) - 1, prefs.bar_height - 1,
 	     BAR_WIDTH (s) - 1, 0);
   XDrawLine (dpy, s->barwin, s->topwhitegc, 0, 0, BAR_WIDTH (s) - 1, 0);
-  XDrawLine (dpy, s->barwin, s->topwhitegc, 0, 0, 0, BAR_HEIGHT - 1);
+  XDrawLine (dpy, s->barwin, s->topwhitegc, 0, 0, 0, prefs.bar_height - 1);
 #endif
 
   /*
@@ -316,7 +316,7 @@ void draw_tbar (ScreenInfo *s)
           cmd_output);
     }
 
-  bartext_winname_width_max = BAR_WIDTH (s) - (2 * BAR_HEIGHT);
+  bartext_winname_width_max = BAR_WIDTH (s) - (2 * prefs.bar_height);
   if (sizeof (bartext_status) != bartext_status_len)
     {
       int length_string;
@@ -325,10 +325,10 @@ void draw_tbar (ScreenInfo *s)
       length_string = strlen (bartext_status);
       width_pixels  = XTextWidth (font, bartext_status, length_string);
 
-      XDrawString (dpy, s->barwin, s->gc, BAR_WIDTH (s) - width_pixels - BAR_HEIGHT,
+      XDrawString (dpy, s->barwin, s->gc, BAR_WIDTH (s) - width_pixels - prefs.bar_height,
           BAR_TEXT_Y, bartext_status, length_string);
 
-      bartext_winname_width_max -= (width_pixels + BAR_HEIGHT);
+      bartext_winname_width_max -= (width_pixels + prefs.bar_height);
     }
 
   /*
@@ -343,7 +343,7 @@ void draw_tbar (ScreenInfo *s)
    */
   if (bar_hidden <= MENU_BASE)
     {
-      XDrawString (dpy, s->barwin, s->gc, BAR_HEIGHT, BAR_TEXT_Y,
+      XDrawString (dpy, s->barwin, s->gc, prefs.bar_height, BAR_TEXT_Y,
 		   menu[-bar_hidden + MENU_BASE], MLEN);
       return;
     }
@@ -403,7 +403,7 @@ void draw_tbar (ScreenInfo *s)
           bartext_winname[len - 1] = '.';
 	}
 
-      XDrawString (dpy, s->barwin, s->gc, BAR_HEIGHT, BAR_TEXT_Y, bartext_winname, len);
+      XDrawString (dpy, s->barwin, s->gc, prefs.bar_height, BAR_TEXT_Y, bartext_winname, len);
     }
 }
 
