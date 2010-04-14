@@ -298,7 +298,7 @@ gravitate (Client * c, int invert)
     case SouthWestGravity:
     case SouthGravity:
     case SouthEastGravity:
-      dy = -BAR_HEIGHT - BORDER;
+      dy = -prefs.bar_height - BORDER;
       break;
     }
 

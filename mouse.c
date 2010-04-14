@@ -122,17 +122,17 @@ move_opaque (Client * c)
 	  XClearWindow (dpy, c->screen->barwin);
 #ifdef THREE_D
 	  XDrawLine (dpy, c->screen->barwin, c->screen->botwhitegc, 0,
-		     BAR_HEIGHT - 1, BAR_WIDTH (c->screen) - 1,
-		     BAR_HEIGHT - 1);
+		     prefs.bar_height - 1, BAR_WIDTH (c->screen) - 1,
+		     prefs.bar_height - 1);
 	  XDrawLine (dpy, c->screen->barwin, c->screen->botwhitegc,
-		     BAR_WIDTH (c->screen) - 1, BAR_HEIGHT - 1,
+		     BAR_WIDTH (c->screen) - 1, prefs.bar_height - 1,
 		     BAR_WIDTH (c->screen) - 1, 0);
 	  XDrawLine (dpy, c->screen->barwin, c->screen->topwhitegc, 0, 0,
 		     BAR_WIDTH (c->screen) - 1, 0);
 	  XDrawLine (dpy, c->screen->barwin, c->screen->topwhitegc, 0, 0, 0,
-		     BAR_HEIGHT - 1);
+		     prefs.bar_height - 1);
 #endif
-	  XDrawString (dpy, c->screen->barwin, c->screen->gc, BAR_HEIGHT,
+	  XDrawString (dpy, c->screen->barwin, c->screen->gc, prefs.bar_height,
 		       BAR_TEXT_Y, geo, len);
 	  break;
 	}
@@ -263,17 +263,17 @@ resize_opaque (Client * c)
 	  XClearWindow (dpy, c->screen->barwin);
 #ifdef THREE_D
 	  XDrawLine (dpy, c->screen->barwin, c->screen->botwhitegc, 0,
-		     BAR_HEIGHT - 1, BAR_WIDTH (c->screen) - 1,
-		     BAR_HEIGHT - 1);
+		     prefs.bar_height - 1, BAR_WIDTH (c->screen) - 1,
+		     prefs.bar_height - 1);
 	  XDrawLine (dpy, c->screen->barwin, c->screen->botwhitegc,
-		     BAR_WIDTH (c->screen) - 1, BAR_HEIGHT - 1,
+		     BAR_WIDTH (c->screen) - 1, prefs.bar_height - 1,
 		     BAR_WIDTH (c->screen) - 1, 0);
 	  XDrawLine (dpy, c->screen->barwin, c->screen->topwhitegc, 0, 0,
 		     BAR_WIDTH (c->screen) - 1, 0);
 	  XDrawLine (dpy, c->screen->barwin, c->screen->topwhitegc, 0, 0, 0,
-		     BAR_HEIGHT - 1);
+		     prefs.bar_height - 1);
 #endif
-	  XDrawString (dpy, c->screen->barwin, c->screen->gc, BAR_HEIGHT,
+	  XDrawString (dpy, c->screen->barwin, c->screen->gc, prefs.bar_height,
 		       BAR_TEXT_Y, geo, len);
 	  break;
 	}

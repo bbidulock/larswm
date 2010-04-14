@@ -116,22 +116,8 @@ main (int argc, char **argv)
   wm_colormaps = XInternAtom (dpy, "WM_COLORMAP_WINDOWS", False);
 
   XrmInitialize ();
+
   load_prefs (rc_file);
-
-  if (prefs.fname != 0)
-    {
-      if ((font = XLoadQueryFont (dpy, prefs.fname)) == 0)
-	fprintf (stderr, "larswm: warning: can't load font %s\n",
-		 prefs.fname);
-    }
-
-  if (font == 0)
-    {
-      prefs.fname = "fixed";
-
-      if ((font = XLoadQueryFont (dpy, prefs.fname)) == 0)
-	fatal ("can not find fixed font");
-    }
 
   shape = XShapeQueryExtension (dpy, &shape_event, &dummy);
   num_screens = ScreenCount (dpy);
@@ -379,7 +365,7 @@ initscreen (ScreenInfo * s, int i)
 
   s->barwin =
     XCreateSimpleWindow (dpy, s->root, BAR_X (s), BAR_Y (s), BAR_WIDTH (s),
-			 BAR_HEIGHT, 0, s->black, s->white);
+			 prefs.bar_height, 0, s->black, s->white);
   XSelectInput (dpy, s->barwin,
 		ExposureMask | ButtonPressMask | ButtonReleaseMask);
   raise_tbar (s);

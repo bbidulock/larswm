@@ -43,6 +43,7 @@ set_defaults (void)
 
   prefs.desktops = 4;
   prefs.panelsize = 0;
+  prefs.bar_height = 0;
 
   for (i = 0; i < MAXSCREENS; i++)
     {
@@ -399,6 +400,10 @@ dump_prefs (void)
   printf ("! Size of the space reserved at top for a panel.\n");
   printf ("!\n");
   printf ("! larswm.panelsize: %d\n", prefs.panelsize);
+  printf ("!\n");
+  printf ("! Height of the bar, 0 to mak it depend on font size.\n");
+  printf ("!\n");
+  printf ("! larswm.bar_height: %d\n", prefs.bar_height);
   printf ("!\n");
   printf ("! Virtual desktop names:\n");
   printf ("!\n");
@@ -844,11 +849,34 @@ load_prefs (char *filename)
     if ((db = XrmGetFileDatabase (DEFRC)) == NULL)
       return;
 
+  if (XrmGetResource (db, "larswm.font", "Larswm.Font", &vt, &v))
+    prefs.fname = strdup (v.addr);
+  if (prefs.fname != 0)
+    {
+      if ((font = XLoadQueryFont (dpy, prefs.fname)) == 0)
+	fprintf (stderr, "larswm: warning: can't load font %s\n",
+		 prefs.fname);
+    }
+
+  if (font == 0)
+    {
+      prefs.fname = "fixed";
+
+      if ((font = XLoadQueryFont (dpy, prefs.fname)) == 0)
+	fatal ("can not find fixed font");
+    }
+
+
   if (XrmGetResource (db, "larswm.desktops", "Larswm.Desktops", &vt, &v))
     prefs.desktops = atoi (v.addr);
 
   if (XrmGetResource (db, "larswm.panelsize", "Larswm.Panelsize", &vt, &v))
     prefs.panelsize = atoi (v.addr);
+
+  if (XrmGetResource (db, "larswm.bar_height", "Larswm.Bar_height", &vt, &v))
+    prefs.bar_height = atoi (v.addr);
+	if (prefs.bar_height == 0)
+		prefs.bar_height = 2 + font->ascent + font->descent;
 
   for (i = 0; i < MAXSCREENS; i++)
     {
@@ -875,9 +903,6 @@ load_prefs (char *filename)
 
   if (XrmGetResource (db, "larswm.foreground", "Larswm.Foreground", &vt, &v))
     prefs.fgstr = strdup (v.addr);
-
-  if (XrmGetResource (db, "larswm.font", "Larswm.Font", &vt, &v))
-    prefs.fname = strdup (v.addr);
 
   for (i = 0; i < MAXAPPS; i++)
     {

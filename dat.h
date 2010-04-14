@@ -20,11 +20,10 @@
 #define L_TOP(x) (unsigned short) (((x) + L_DELTA) > 65535 ? 65535 : (x) + L_DELTA)
 #define L_BOT(x) (unsigned short) (((x) - L_DELTA) < 0 ? 0 : (x) - L_DELTA)
 
-#define BAR_HEIGHT	(2 + font->ascent + font->descent)
 #define BAR_TEXT_Y	(1 + font->ascent)
 
 #define BAR_X(s)	0
-#define BAR_Y(s)	(DisplayHeight (dpy, (s)->num) - BAR_HEIGHT)
+#define BAR_Y(s)	(DisplayHeight (dpy, (s)->num) - prefs.bar_height)
 #define BAR_WIDTH(s)	(DisplayWidth (dpy, (s)->num))
 
 #define DEFSHELL	"/bin/sh"
@@ -185,6 +184,7 @@ struct Prefs
 
   int desktops;
   int panelsize;
+  int bar_height;
   char *dtname[MAXSCREENS][MAXDESKTOPS];
 
   char *bgstr;
