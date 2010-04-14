@@ -45,6 +45,7 @@ set_defaults (void)
   prefs.panelsize = 0;
   prefs.bar_height = 0;
   prefs.tray_width = 0;
+  prefs.move_out = 1;
 
   for (i = 0; i < MAXSCREENS; i++)
     {
@@ -409,6 +410,10 @@ dump_prefs (void)
   printf ("! Width of the notification area.\n");
   printf ("!\n");
   printf ("! larswm.tray_width: %d\n", prefs.tray_width);
+  printf ("!\n");
+  printf ("! Allow floating windows to be moved past screen limits.\n");
+  printf ("!\n");
+	printf ("! larswm.move_out: %s\n", show_bool(prefs.move_out));
   printf ("!\n");
   printf ("! Virtual desktop names:\n");
   printf ("!\n");
@@ -885,6 +890,9 @@ load_prefs (char *filename)
 
   if (XrmGetResource (db, "larswm.tray_width", "Larswm.Tray_width", &vt, &v))
     prefs.tray_width = atoi (v.addr);
+
+	if (XrmGetResource (db, "larswm.move_out", "Larswm.Move_out", &vt, &v))
+    prefs.move_out = get_bool (v.addr);
 
   for (i = 0; i < MAXSCREENS; i++)
     {

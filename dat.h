@@ -186,6 +186,8 @@ struct Prefs
   int panelsize;
   int bar_height;
   int tray_width;
+  int move_out;
+
   char *dtname[MAXSCREENS][MAXDESKTOPS];
 
   char *bgstr;

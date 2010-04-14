@@ -1385,7 +1385,9 @@ move_up (Client * c)
 {
   if (c && c->isnotile)
     {
-      int min_y = prefs.panelsize + MIN_VISIBLE - c->dy;
+      int min_y = prefs.panelsize;
+      if (prefs.move_out)
+	min_y += MIN_VISIBLE - c->dy;
       if (c->screen->bigmr[c->screen->desktop])
 	c->y -= (c->screen->tile_height / 20);
       else
@@ -1405,6 +1407,8 @@ move_down (Client * c)
   if (c && c->isnotile)
     {
       int max_y = c->screen->tile_height - MIN_VISIBLE;
+      if (!prefs.move_out)
+	max_y = c->screen->tile_height - c->dy - (2 * BORDER);
 
       if (c->screen->bigmr[c->screen->desktop])
 	c->y += (c->screen->tile_height / 20);
@@ -1424,7 +1428,10 @@ move_left (Client * c)
 {
   if (c && c->isnotile)
     {
-      int min_x = MIN_VISIBLE - c->dx;
+      int min_x = 0;
+      if (prefs.move_out)
+	min_x = MIN_VISIBLE - c->dx;
+
       if (c->screen->bigmr[c->screen->desktop])
 	c->x -= (DisplayWidth (dpy, c->screen->num) / 20);
       else
@@ -1444,6 +1451,8 @@ move_right (Client * c)
   if (c && c->isnotile)
     {
       int max_x = DisplayWidth (dpy, c->screen->num) - MIN_VISIBLE;
+      if (!prefs.move_out)
+	max_x = DisplayWidth (dpy, c->screen->num) - c->dx - (2 * BORDER);
 
       if (c->screen->bigmr[c->screen->desktop])
 	c->x += (DisplayWidth (dpy, c->screen->num) / 20);
