@@ -44,6 +44,7 @@ set_defaults (void)
   prefs.desktops = 4;
   prefs.panelsize = 0;
   prefs.bar_height = 0;
+  prefs.tray_width = 0;
 
   for (i = 0; i < MAXSCREENS; i++)
     {
@@ -401,9 +402,13 @@ dump_prefs (void)
   printf ("!\n");
   printf ("! larswm.panelsize: %d\n", prefs.panelsize);
   printf ("!\n");
-  printf ("! Height of the bar, 0 to mak it depend on font size.\n");
+  printf ("! Height of the bar, 0 to make it depend on font size.\n");
   printf ("!\n");
   printf ("! larswm.bar_height: %d\n", prefs.bar_height);
+  printf ("!\n");
+  printf ("! Width of the notification area.\n");
+  printf ("!\n");
+  printf ("! larswm.tray_width: %d\n", prefs.tray_width);
   printf ("!\n");
   printf ("! Virtual desktop names:\n");
   printf ("!\n");
@@ -877,6 +882,9 @@ load_prefs (char *filename)
     prefs.bar_height = atoi (v.addr);
 	if (prefs.bar_height == 0)
 		prefs.bar_height = 2 + font->ascent + font->descent;
+
+  if (XrmGetResource (db, "larswm.tray_width", "Larswm.Tray_width", &vt, &v))
+    prefs.tray_width = atoi (v.addr);
 
   for (i = 0; i < MAXSCREENS; i++)
     {

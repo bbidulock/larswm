@@ -24,7 +24,7 @@
 
 #define BAR_X(s)	0
 #define BAR_Y(s)	(DisplayHeight (dpy, (s)->num) - prefs.bar_height)
-#define BAR_WIDTH(s)	(DisplayWidth (dpy, (s)->num))
+#define BAR_WIDTH(s)	(DisplayWidth (dpy, (s)->num) - prefs.tray_width)
 
 #define DEFSHELL	"/bin/sh"
 
@@ -185,6 +185,7 @@ struct Prefs
   int desktops;
   int panelsize;
   int bar_height;
+  int tray_width;
   char *dtname[MAXSCREENS][MAXDESKTOPS];
 
   char *bgstr;
