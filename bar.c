@@ -36,6 +36,47 @@ static char *menu[] = {
 #define MLEN 41
 
 /*
+ * Taken from:
+ *   http://xopendisplay.hilltopia.ca/2009/Mar/Xlib-tutorial-
+ *   part-8----a-different-way-to-reach-wide-characters.html
+*/
+int utf8toXChar2b(XChar2b *output_r, int outsize, const char *input, int inlen) {
+  int j, k;
+  for(j =0, k=0; j < inlen && k < outsize; j ++){
+    unsigned char c = input[j];
+    if (c < 128)  {
+      output_r[k].byte1 = 0;
+      output_r[k].byte2 = c;
+      k++;
+    } else if (c < 0xC0) {
+      /* we're inside a character we don't know  */
+      continue;
+    } else switch(c&0xF0){
+      case 0xC0: case 0xD0: /* two bytes 5+6 = 11 bits */
+	if (inlen < j+1){ return k; }
+	output_r[k].byte1 = (c&0x1C) >> 2;
+	j++;
+	output_r[k].byte2 = ((c&0x3) << 6) + (input[j]&0x3F);
+	k++;
+	break;
+      case 0xE0: /* three bytes 4+6+6 = 16 bits */
+	if (inlen < j+2){ return k; }
+	j++;
+	output_r[k].byte1 = ((c&0xF) << 4) + ((input[j]&0x3C) >> 2);
+	c = input[j];
+	j++;
+	output_r[k].byte2 = ((c&0x3) << 6) + (input[j]&0x3F);
+	k++;
+	break;
+      case 0xFF:
+	/* the character uses more than 16 bits */
+	continue;
+      }
+  }
+  return k;
+}
+
+/*
  * buffer_append - append to a fixed sized buffer in a snprintf like fassion.
  *
  * Arguments:
@@ -321,12 +362,19 @@ void draw_tbar (ScreenInfo *s)
     {
       int length_string;
       int width_pixels;
+      XChar2b *xchar2b;
 
       length_string = strlen (bartext_status);
-      width_pixels  = XTextWidth (font, bartext_status, length_string);
 
-      XDrawString (dpy, s->barwin, s->gc, BAR_WIDTH (s) - width_pixels - prefs.bar_height,
-          BAR_TEXT_Y, bartext_status, length_string);
+      xchar2b = malloc (length_string * sizeof(*xchar2b));
+      length_string = utf8toXChar2b (xchar2b, length_string, bartext_status, length_string);
+
+      width_pixels = XTextWidth16 (font, xchar2b, length_string);
+
+      XDrawString16 (dpy, s->barwin, s->gc, BAR_WIDTH (s) - width_pixels - prefs.bar_height,
+		     BAR_TEXT_Y, xchar2b, length_string);
+
+      free (xchar2b);
 
       bartext_winname_width_max -= (width_pixels + prefs.bar_height);
     }
