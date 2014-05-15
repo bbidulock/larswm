@@ -133,6 +133,12 @@ manage (Client * c, int mapped)
     }
 
   XSetWindowBorderWidth (dpy, c->window, 0);
+  {
+    XSetWindowAttributes xswa;
+    xswa.backing_store = NotUseful;
+    xswa.win_gravity = NorthWestGravity;
+    XChangeWindowAttributes(dpy, c->window, CWBackingStore | CWWinGravity, &xswa);
+  }
   XReparentWindow (dpy, c->window, c->parent, BORDER, BORDER);
 
   c->isshaped = 0;
