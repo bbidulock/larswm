@@ -1,0 +1,9 @@
+.*.sw[nop]
+Makefile
+Makefile.bak
+*.o
+*._man
+larsclock
+larsmenu
+larsremote
+larswm
